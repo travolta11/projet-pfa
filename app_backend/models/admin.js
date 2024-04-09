@@ -1,5 +1,6 @@
 const db = require('../config/db');
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 class Admin {
    
    
@@ -89,6 +90,33 @@ class Admin {
     }
 //get by id admin...................................................................
 
+
+/*static async authenticate(email, password) {
+    try {
+        // Find admin by email
+        const [rows, fields] = await db.promise().query('SELECT * FROM admin WHERE email = ?', [email]);
+        const admin = rows[0];
+
+        if (!admin) {
+            console.error(`Admin not found for email: ${email}`);
+            return null; // Admin not found
+        }
+
+        // Compare passwords
+        if (admin.password !== password) {
+            console.error(`Incorrect password for email: ${email}`);
+            return null; // Incorrect password
+        }
+
+        // Generate JWT token
+        const token = jwt.sign({ adminId: admin.id }, 'issam', { expiresIn: '1h' });
+
+        return token;
+    } catch (error) {
+        console.error('Authentication error:', error);
+        throw new Error('Internal server error');
+    }
+}*/
 
 
 }

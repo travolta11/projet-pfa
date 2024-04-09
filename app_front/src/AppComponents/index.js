@@ -99,7 +99,7 @@ const AppComponents = () => {
           
         }}
       >
-        <Typography.Title level={5}>     Projet Pfa EMSI ©2024 Created by </Typography.Title>
+        
    
       </Footer>
       </Layout>

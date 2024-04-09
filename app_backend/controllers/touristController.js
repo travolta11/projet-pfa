@@ -21,8 +21,8 @@ static async addTourist(req,res){
     var email=  req.body.email;
     var password=  req.body.password;
     var id_admin=req.body.id_admin;
-    var AddedAdmin=await Tourist.addTourist(username,email,password,id_admin);
-    if(AddedAdmin==true){
+    var AddedTourist=await Tourist.addTourist(username,email,password,id_admin);
+    if(AddedTourist==true){
         res.send('add succesfully')
     }
     else{
@@ -45,7 +45,7 @@ static async deleteTourist(req, res) {
             res.status(404).json({ error: 'tourist not found or unable to delete.' });
         }
     } catch (error) {
-        console.error('Error deleting admin:', error);
+        console.error('Error deleting tourist:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }

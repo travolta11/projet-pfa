@@ -3,7 +3,7 @@ const db = require('../config/db');
 class Tourist {
    
    
-//get admin..............................................
+//get tourist..............................................
     static async getAllTourist() {
         return new Promise((resolve, reject) => {
             db.query("SELECT * FROM tourist", (error, results) => {
@@ -15,11 +15,11 @@ class Tourist {
             });
         });
     }
-//get admin..........................................
+//get tourist..........................................
 
 
 
-//add admin.........................................................................
+//add tourist.........................................................................
 static async addTourist(username, email, password, id_admin) {
     return new Promise((resolve, reject) => {
         db.query("INSERT INTO tourist (username, email, password, id_admin) VALUES (?, ?, ?, ?)",
@@ -40,12 +40,12 @@ static async addTourist(username, email, password, id_admin) {
     });
 }
 
-//add admin.........................................................................
+//add tourist.........................................................................
 
 
 
 
-//delete admin......................................................................
+//delete tourist......................................................................
     static async deleteTourist(touristId) {
         return new Promise((resolve) => {
             db.query('DELETE FROM tourist WHERE id = ?', [touristId], (error, results) => {
@@ -58,13 +58,13 @@ static async addTourist(username, email, password, id_admin) {
             });
         });
     }
-//delete admin......................................................................
+//delete tourist......................................................................
 
 
 
 
 
-//update admin......................................................................
+//update tourist......................................................................
     static async updateTourist(touristId, newData) {
         return new Promise((resolve) => {
             db.query('UPDATE tourist SET ? WHERE id = ?', [newData, touristId], (error, results) => {
@@ -78,11 +78,11 @@ static async addTourist(username, email, password, id_admin) {
             });
         });
     }
-//update admin......................................................................
+//update tourist......................................................................
 
 
 
-//get by id admin...................................................................
+//get by id tourist...................................................................
     static async getTouristById(touristId) {
         return new Promise((resolve) => {
             db.query('SELECT * FROM tourist WHERE id = ?', [touristId], (error, results) => {
@@ -94,7 +94,7 @@ static async addTourist(username, email, password, id_admin) {
             });
         });
     }
-//get by id admin...................................................................
+//get by id tourist...................................................................
 
 
 
