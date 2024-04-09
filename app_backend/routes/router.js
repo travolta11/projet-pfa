@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const monumentController = require('../controllers/monumentController');
+const adminController=require('../controllers/adminController')
 
 router.get('/', (req, res) => {
     res.send('Hello from homepage.');
@@ -18,6 +19,19 @@ router.delete('/monument/:id', monumentController.deleteMonument);
 router.put('/monument/:id', monumentController.updateMonument);
 //get api by id
 router.get('/monument/:id', monumentController.getMonumentById);
+//Monument CRUD API
+
+//Admin CRUD API
+//get api
+router.get('/admin',adminController.getAllAdmins);
+//add api
+router.post('/admin',adminController.addAdmin);
+//delete api
+router.delete('/admin/:id', adminController.deleteAdmin); 
+//update api
+router.put('/admin/:id', adminController.updateAdmin);
+//get api by id
+router.get('/admin/:id', adminController.getAdminById);
 //Monument CRUD API
 
 
