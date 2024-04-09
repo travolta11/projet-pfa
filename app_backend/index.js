@@ -1,16 +1,12 @@
-import express from "express";
-import bodyParser from 'body-parser';
-
-
+const express = require('express');
+const bodyParser = require('body-parser');
+const mydb = require('./config/db');
+const router = require('./routes/router'); 
 const app = express();
 const PORT = 5000;
 
 app.use(bodyParser.json());
 
+app.use(router); 
 
-
-app.get('/',(req,res)=>{
-   
-    res.send('Hello from homepage.');
-});
-app.listen(PORT, ()=> console.log(`Server running on port : http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port : http://localhost:${PORT}`));
