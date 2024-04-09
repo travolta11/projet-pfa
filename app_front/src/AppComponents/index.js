@@ -14,7 +14,7 @@ import './style.css';
 const { Header, Sider, Content , Footer} = Layout;
 
 
-const AppComponents = ({ token }) => {
+const AppComponents = () => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const [selectedKeys, setSelectedKeys] = useState("/");

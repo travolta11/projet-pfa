@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import axios from 'axios';
+
 import { Button, Checkbox, Form,Avatar, Space, Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
