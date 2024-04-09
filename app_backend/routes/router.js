@@ -8,6 +8,9 @@ router.get('/', (req, res) => {
 
 router.get('/monument', monumentController.getAllMonuments);
 router.post('/monument',monumentController.addMonument);
+router.delete('/monument/:id', monumentController.deleteMonument); 
+router.put('/monument/:id', monumentController.updateMonument);
+
 
 
 module.exports = router;
