@@ -1,4 +1,4 @@
-const Admin=require("../models/tourist")
+const Admin=require("../models/admin")
 class adminController{
 //get controller................................................................
 static async getAllAdmins(req,res){

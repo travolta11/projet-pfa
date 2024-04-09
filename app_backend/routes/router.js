@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const monumentController = require('../controllers/monumentController');
-const adminController=require('../controllers/adminController')
-const touristController=require('../controllers/touristController')
+const adminController=require('../controllers/adminController');
+const touristController=require('../controllers/touristController');
+const avisController=require('../controllers/avisController')
+
 router.get('/', (req, res) => {
     res.send('Hello from homepage.');
 });
@@ -32,7 +34,7 @@ router.delete('/admin/:id', adminController.deleteAdmin);
 router.put('/admin/:id', adminController.updateAdmin);
 //get api by id
 router.get('/admin/:id', adminController.getAdminById);
-//Monument CRUD API
+//Admin CRUD API
 
 //Tourist CRUD API
 //get api
@@ -45,9 +47,20 @@ router.delete('/tourist/:id', touristController.deleteTourist);
 router.put('/tourist/:id', touristController.updateTourist);
 //get api by id
 router.get('/tourist/:id', touristController.getTouristById);
-//Monument CRUD API
+//Tourist CRUD API
 
-
+//Avis CRUD API
+//get api
+router.get('/avis',avisController.getAllavis);
+//add api
+router.post('/avis',avisController.addAvis);
+//delete api
+router.delete('/avis/:id', avisController.deleteAvis); 
+//update api
+router.put('/avis/:id', avisController.updateAvis);
+//get api by id
+router.get('/avis/:id', avisController.getAvisById);
+//Avis CRUD API
 
 
 module.exports = router;
