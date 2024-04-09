@@ -1,13 +1,23 @@
 import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import './index.css';
+
+import { Button, Checkbox, Form,Avatar, Space, Input } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+
 const onFinish = (values) => {
   console.log('Success:', values);
 };
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
+
 const Login = () => (
-  <Form
+
+
+  <div className="login-container">
+    
+  <Form className="login-form"
+  
     name="basic"
     labelCol={{
       span: 8,
@@ -25,26 +35,38 @@ const Login = () => (
     onFinishFailed={onFinishFailed}
     autoComplete="off"
   >
+   <div className="login-header">
+        <Space align="center">
+          <Avatar size={64} icon={<UserOutlined />} className="login-logo" />
+          <h2 className="login-title">Login</h2>
+        </Space>
+      </div>
     <Form.Item
-      label="Username"
-      name="username"
+      label="Email"
+      name="email"
       rules={[
         {
           required: true,
-          message: 'Please input your username!',
+          message: 'Veuillez insérer votre email!',
+         
+
         },
+
+
       ]}
+      
+
     >
       <Input />
     </Form.Item>
 
     <Form.Item
-      label="Password"
+      label="Mot de passe"
       name="password"
       rules={[
         {
           required: true,
-          message: 'Please input your password!',
+          message: 'Veuillez insérer votre mot de passe!',
         },
       ]}
     >
@@ -59,7 +81,7 @@ const Login = () => (
         span: 16,
       }}
     >
-      <Checkbox>Remember me</Checkbox>
+     <Checkbox >Enregistrer le mot de passe</Checkbox>
     </Form.Item>
 
     <Form.Item
@@ -68,10 +90,18 @@ const Login = () => (
         span: 16,
       }}
     >
-      <Button type="primary" htmlType="submit">
-        Submit
+      <Button className="btn1" type="primary" htmlType="submit" >
+       Se connecter
       </Button>
+      <style>
+    
+</style>
+
+
     </Form.Item>
   </Form>
+
+</div>
+
 );
 export default Login;
