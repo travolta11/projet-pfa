@@ -66,6 +66,22 @@ class MonumentController {
     }
 
 
+    static async getMonumentById(req, res) {
+        const monumentId = req.params.id;
+
+        try {
+            const monument = await Monument.getMonumentById(monumentId);
+            if (monument) {
+                res.status(200).json(monument);
+            } else {
+                res.status(404).json({ error: 'Monument not found.' });
+            }
+        } catch (error) {
+            console.error('Error fetching monument:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
+
 }
 
 

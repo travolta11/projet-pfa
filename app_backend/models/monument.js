@@ -56,6 +56,18 @@ class Monument {
     }
 
 
+    static async getMonumentById(monumentId) {
+        return new Promise((resolve) => {
+            db.query('SELECT * FROM monument WHERE id = ?', [monumentId], (error, results) => {
+                if (!error && results.length > 0) {
+                    resolve(results[0]);
+                } else {
+                    resolve(null);
+                }
+            });
+        });
+    }
+
 }
 
 module.exports = Monument;
