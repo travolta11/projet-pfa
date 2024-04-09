@@ -1,12 +1,12 @@
-const Admin=require("../models/tourist")
-class adminController{
+const Tourist=require("../models/tourist")
+class touristController{
 //get controller................................................................
-static async getAllAdmins(req,res){
+static async getAlltourist(req,res){
     try {
-        const results = await Admin.getAllAdmin();
+        const results = await Tourist.getAllTourist();
         res.send(results);
     } catch (error) {
-        console.error('Error fetching admin:', error);
+        console.error('Error fetching tourist:', error);
         res.status(500).send('Internal Server Error');
     }
 
@@ -16,11 +16,12 @@ static async getAllAdmins(req,res){
 
 
 //add controller................................................................
-static async addAdmin(req,res){
+static async addTourist(req,res){
     var username=  req.body.username;
     var email=  req.body.email;
     var password=  req.body.password;
-    var AddedAdmin=await Admin.addAdmin(username,email,password);
+    var id_admin=req.body.id_admin;
+    var AddedAdmin=await Tourist.addTourist(username,email,password,id_admin);
     if(AddedAdmin==true){
         res.send('add succesfully')
     }
@@ -33,15 +34,15 @@ static async addAdmin(req,res){
 
 
 //delete controller.............................................................
-static async deleteAdmin(req, res) {
-    const adminId = req.params.id;
+static async deleteTourist(req, res) {
+    const touristId = req.params.id;
 
     try {
-        const deleted = await Admin.deleteAdmin(adminId);
+        const deleted = await Tourist.deleteTourist(touristId);
         if (deleted) {
-            res.status(200).json({ message: 'admin deleted successfully.' });
+            res.status(200).json({ message: 'tourist deleted successfully.' });
         } else {
-            res.status(404).json({ error: 'admin not found or unable to delete.' });
+            res.status(404).json({ error: 'tourist not found or unable to delete.' });
         }
     } catch (error) {
         console.error('Error deleting admin:', error);
@@ -51,41 +52,41 @@ static async deleteAdmin(req, res) {
 //delete controller.............................................................
 
 //update controller............................................................
-static async updateAdmin(req, res) {
-    const adminId = req.params.id;
-    const { username, email, password} = req.body;
+static async updateTourist(req, res) {
+    const TouristId = req.params.id;
+    const {username, email, password,id_admin} = req.body;
 
     try {
-        const updated = await Admin.updateAdmin(adminId, { username, email, password });
+        const updated = await Tourist.updateTourist(TouristId, { username, email, password,id_admin });
         if (updated) {
-            res.status(200).json({ message: 'Admin updated successfully.' });
+            res.status(200).json({ message: 'Tourist updated successfully.' });
         } else {
-            res.status(404).json({ error: 'Admin not found or unable to update.' });
+            res.status(404).json({ error: 'Tourist not found or unable to update.' });
         }
     } catch (error) {
-        console.error('Error updating Admin:', error);
+        console.error('Error updating Tourist:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 //update controller............................................................
 
 //get by id controller.......................................................
-static async getAdminById(req, res) {
-    const AdminId = req.params.id;
+static async getTouristById(req, res) {
+    const TouristId = req.params.id;
 
     try {
-        const admin = await Admin.getAdminById(AdminId);
-        if (admin) {
-            res.status(200).json(admin);
+        const tourist = await Tourist.getTouristById(TouristId);
+        if (tourist) {
+            res.status(200).json(tourist);
         } else {
-            res.status(404).json({ error: 'Admin not found.' });
+            res.status(404).json({ error: 'tourist not found.' });
         }
     } catch (error) {
-        console.error('Error fetching Admin:', error);
+        console.error('Error fetching tourist:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 //get by id controller.......................................................
 
 }
-module.exports = adminController;
+module.exports = touristController;
