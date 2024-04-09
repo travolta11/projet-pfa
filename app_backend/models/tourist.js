@@ -1,12 +1,12 @@
 const db = require('../config/db');
 
-class Admin {
+class Tourist {
    
    
 //get admin..............................................
-    static async getAllAdmin() {
+    static async getAllTourist() {
         return new Promise((resolve, reject) => {
-            db.query("SELECT * FROM admin", (error, results) => {
+            db.query("SELECT * FROM tourist", (error, results) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20,32 +20,39 @@ class Admin {
 
 
 //add admin.........................................................................
-    static async addAdmin(username, email, password) {
-        return new Promise(resolve => {
-            db.query("INSERT INTO admin (username, email, password) VALUES (?, ?, ?)",
-                [username,email,password], (error, results) => {
-                    if (!error) {
-                        resolve(true);
+static async addTourist(username, email, password, id_admin) {
+    return new Promise((resolve, reject) => {
+        db.query("INSERT INTO tourist (username, email, password, id_admin) VALUES (?, ?, ?, ?)",
+            [username, email, password, id_admin], (error, results) => {
+                if (!error) {
+                    resolve(true);
+                } else {
+                    if (error.code === 'ER_NO_REFERENCED_ROW_2') {
+                        console.error('Error adding tourist: Admin ID does not exist');
+                        console.log(id_admin)
                     } else {
-                        console.error('Error adding admin:', error);
-                        resolve(false);
+                        console.error('Error adding tourist:', error);
+                        console.log(id_admin)
                     }
-                });
-        });
-    }
+                    resolve(false);
+                }
+            });
+    });
+}
+
 //add admin.........................................................................
 
 
 
 
 //delete admin......................................................................
-    static async deleteAdmin(adminId) {
+    static async deleteTourist(touristId) {
         return new Promise((resolve) => {
-            db.query('DELETE FROM admin WHERE id = ?', [adminId], (error, results) => {
+            db.query('DELETE FROM tourist WHERE id = ?', [touristId], (error, results) => {
                 if (!error) {
                     resolve(true);
                 } else {
-                    console.error('Error deleting admin:', error);
+                    console.error('Error deleting tourist:', error);
                     resolve(false);
                 }
             });
@@ -58,14 +65,14 @@ class Admin {
 
 
 //update admin......................................................................
-    static async updateAdmin(adminId, newData) {
+    static async updateTourist(touristId, newData) {
         return new Promise((resolve) => {
-            db.query('UPDATE admin SET ? WHERE id = ?', [newData, adminId], (error, results) => {
+            db.query('UPDATE tourist SET ? WHERE id = ?', [newData, touristId], (error, results) => {
                 if (!error) {
                     resolve(true);
                     console.log(newData)
                 } else {
-                    console.error('Error updating admin:', error);
+                    console.error('Error updating tourist:', error);
                     resolve(false);
                 }
             });
@@ -76,9 +83,9 @@ class Admin {
 
 
 //get by id admin...................................................................
-    static async getAdminById(adminId) {
+    static async getTouristById(touristId) {
         return new Promise((resolve) => {
-            db.query('SELECT * FROM admin WHERE id = ?', [adminId], (error, results) => {
+            db.query('SELECT * FROM tourist WHERE id = ?', [touristId], (error, results) => {
                 if (!error && results.length > 0) {
                     resolve(results[0]);
                 } else {
@@ -93,4 +100,4 @@ class Admin {
 
 }
 
-module.exports = Admin;
+module.exports = Tourist;
