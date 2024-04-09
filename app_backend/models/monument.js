@@ -12,6 +12,21 @@ class Monument {
             });
         });
     }
+
+    static async addMonuments(titre, description, localisation, ville, id_admin, createur, horaire, frais, avis, images) {
+        return new Promise(resolve => {
+            db.query("INSERT INTO monument (titre, description, localisation, ville, id_admin, createur, horaire, frais, avis, images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                [titre, description, localisation, ville, id_admin, createur, horaire, frais, avis, images], (error, results) => {
+                    if (!error) {
+                        resolve(true);
+                    } else {
+                        console.error('Error adding monument:', error);
+                        resolve(false);
+                    }
+                });
+        });
+    }
+    
 }
 
 module.exports = Monument;

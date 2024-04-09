@@ -7,5 +7,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/monument', monumentController.getAllMonuments);
+router.post('/monument',monumentController.addMonument);
+
 
 module.exports = router;
