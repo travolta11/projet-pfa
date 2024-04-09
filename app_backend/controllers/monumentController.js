@@ -1,6 +1,10 @@
 const Monument = require('../models/monument');
 
 class MonumentController {
+
+
+
+//get controller................................................................
     static async getAllMonuments(req, res) {
         try {
             const results = await Monument.getAllMonuments();
@@ -10,7 +14,12 @@ class MonumentController {
             res.status(500).send('Internal Server Error');
         }
     }
+//get controller................................................................
 
+
+
+
+//add controller................................................................
     static async addMonument(req,res){
             var titre=  req.body.titre;
             var description = req.body.description;
@@ -29,8 +38,13 @@ class MonumentController {
                 
                 res.send('add failed')
     }
+//add controller................................................................
 
 
+
+
+
+//delete controller.............................................................
     static async deleteMonument(req, res) {
         const monumentId = req.params.id;
 
@@ -46,8 +60,11 @@ class MonumentController {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
+//delete controller.............................................................
 
 
+
+//update controller............................................................
     static async updateMonument(req, res) {
         const monumentId = req.params.id;
         const { titre, description, localisation, ville, id_admin, createur, horaire, frais, avis, images } = req.body;
@@ -64,8 +81,12 @@ class MonumentController {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
+//update controller............................................................
 
 
+
+
+//get by id controller.......................................................
     static async getMonumentById(req, res) {
         const monumentId = req.params.id;
 
@@ -81,6 +102,10 @@ class MonumentController {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
+    //get by id controller.......................................................
+
+
+    
 
 }
 

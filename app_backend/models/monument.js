@@ -1,6 +1,9 @@
 const db = require('../config/db');
 
 class Monument {
+   
+   
+   //get model..............................................
     static async getAllMonuments() {
         return new Promise((resolve, reject) => {
             db.query("SELECT * FROM monument", (error, results) => {
@@ -12,7 +15,11 @@ class Monument {
             });
         });
     }
+//get model..........................................
 
+
+
+//add model.........................................................................
     static async addMonuments(titre, description, localisation, ville, id_admin, createur, horaire, frais, avis, images) {
         return new Promise(resolve => {
             db.query("INSERT INTO monument (titre, description, localisation, ville, id_admin, createur, horaire, frais, avis, images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -26,8 +33,12 @@ class Monument {
                 });
         });
     }
+//add model.........................................................................
 
 
+
+
+//delete model......................................................................
     static async deleteMonument(monumentId) {
         return new Promise((resolve) => {
             db.query('DELETE FROM monument WHERE id = ?', [monumentId], (error, results) => {
@@ -40,8 +51,13 @@ class Monument {
             });
         });
     }
-    
+//delete model......................................................................
 
+
+
+
+
+//update model......................................................................
     static async updateMonument(monumentId, newData) {
         return new Promise((resolve) => {
             db.query('UPDATE monument SET ? WHERE id = ?', [newData, monumentId], (error, results) => {
@@ -54,8 +70,11 @@ class Monument {
             });
         });
     }
+//update model......................................................................
 
 
+
+//get by id model...................................................................
     static async getMonumentById(monumentId) {
         return new Promise((resolve) => {
             db.query('SELECT * FROM monument WHERE id = ?', [monumentId], (error, results) => {
@@ -67,6 +86,9 @@ class Monument {
             });
         });
     }
+//get by id model...................................................................
+
+
 
 }
 
