@@ -17,7 +17,12 @@ const Utilisateur = () => {
 
   const columns = [
     {
-      title: 'Nom',
+      
+        title: 'ID',
+        dataIndex: 'id',
+        key: 'id',
+      },
+      {title: 'Nom',
       dataIndex: 'Nom',
       key: 'Nom',
       render: (text) => <a>{text}</a>,
@@ -27,17 +32,13 @@ const Utilisateur = () => {
       dataIndex: 'Email',
       key: 'Email',
     },
-    {
-      title: 'Créateur',
-      dataIndex: 'createur',
-      key: 'createur',
-    },
+   
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Button type="primary">Modifier {record.Nom}</Button>
+         
           <Button danger>Supprimer</Button>
         </Space>
       ),
@@ -72,12 +73,7 @@ const Utilisateur = () => {
     <>
       <h1>Utilisateur</h1>
 
-      <div className="searchContainer">
-        <Button type="primary" >
-          Ajouter un utilisateur
-        </Button>
-      </div>
-
+      
       <div className="searchContainer">
         <Input placeholder="Rechercher un utilisateur" className="searchInput" />
         <Button type="primary" icon={<SearchOutlined />} className="searchButton"></Button>
