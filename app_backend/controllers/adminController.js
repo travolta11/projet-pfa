@@ -87,5 +87,29 @@ static async getAdminById(req, res) {
 }
 //get by id controller.......................................................
 
+/*static async login(req, res) {
+    const { email, password } = req.body;
+
+    // Check if email or password is empty
+    if (!email || !password) {
+        console.error('Empty email or password');
+        return res.status(400).json({ message: 'Email and password are required' });
+    }
+
+    try {
+        const token = await Admin.authenticate(email, password);
+
+        if (!token) {
+            console.error(`Authentication failed for email: ${email}`);
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        res.json({ token });
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}*/
+
 }
 module.exports = adminController;

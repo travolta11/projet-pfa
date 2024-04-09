@@ -1,4 +1,7 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const db = require('../config/db');
 const router = express.Router();
 const monumentController = require('../controllers/monumentController');
 const adminController=require('../controllers/adminController')
@@ -34,7 +37,7 @@ router.put('/admin/:id', adminController.updateAdmin);
 router.get('/admin/:id', adminController.getAdminById);
 //Monument CRUD API
 
-
+//router.post('/login', adminController.login);
 
 
 module.exports = router;
