@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 class Admin {
    
    
-   //get admin..............................................
+//get admin..............................................
     static async getAllAdmin() {
         return new Promise((resolve, reject) => {
             db.query("SELECT * FROM admin", (error, results) => {
@@ -28,7 +28,7 @@ class Admin {
                     if (!error) {
                         resolve(true);
                     } else {
-                        console.error('Error adding monument:', error);
+                        console.error('Error adding admin:', error);
                         resolve(false);
                     }
                 });

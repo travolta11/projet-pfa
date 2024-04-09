@@ -5,7 +5,7 @@ const db = require('../config/db');
 const router = express.Router();
 const monumentController = require('../controllers/monumentController');
 const adminController=require('../controllers/adminController')
-
+const touristController=require('../controllers/touristController')
 router.get('/', (req, res) => {
     res.send('Hello from homepage.');
 });
@@ -37,7 +37,20 @@ router.put('/admin/:id', adminController.updateAdmin);
 router.get('/admin/:id', adminController.getAdminById);
 //Monument CRUD API
 
-//router.post('/login', adminController.login);
+//Tourist CRUD API
+//get api
+router.get('/tourist',touristController.getAlltourist);
+//add api
+router.post('/tourist',touristController.addTourist);
+//delete api
+router.delete('/tourist/:id', touristController.deleteTourist); 
+//update api
+router.put('/tourist/:id', touristController.updateTourist);
+//get api by id
+router.get('/tourist/:id', touristController.getTouristById);
+//Monument CRUD API
+
+
 
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const Admin=require("../models/admin")
+const Admin=require("../models/tourist")
 class adminController{
 //get controller................................................................
 static async getAllAdmins(req,res){
@@ -6,7 +6,7 @@ static async getAllAdmins(req,res){
         const results = await Admin.getAllAdmin();
         res.send(results);
     } catch (error) {
-        console.error('Error fetching monuments:', error);
+        console.error('Error fetching admin:', error);
         res.status(500).send('Internal Server Error');
     }
 
