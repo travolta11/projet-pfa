@@ -1,18 +1,10 @@
-import React, { useState,useEffect } from 'react';
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  DashboardOutlined,
-} from '@ant-design/icons';
-import { useLocation, useNavigate,Outlet } from "react-router-dom";
-import { Layout, Menu, Button, theme,Typography, } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { MenuFoldOutlined, MenuUnfoldOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined, DashboardOutlined, PushpinOutlined, SolutionOutlined } from '@ant-design/icons';
+import { useLocation, useNavigate, Outlet } from "react-router-dom";
+import { Layout, Menu, Button, theme, Typography } from 'antd';
 import AppRoutes from '../AppRoutes';
 import './style.css';
-const { Header, Sider, Content , Footer} = Layout;
-
+const { Header, Sider, Content, Footer } = Layout;
 
 const AppComponents = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -29,13 +21,15 @@ const AppComponents = () => {
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
+        {/* Placeholder for logo */}
+        <div className="logo" > 
+    <span style={{ fontSize: '20px', color: 'white' }}>Admin Panel</span>
+  </div>
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['1']}
           onClick={(item) => {
-            //item.key
             navigate(item.key);
           }}
           selectedKeys={[selectedKeys]}
@@ -47,12 +41,12 @@ const AppComponents = () => {
             },
             {
               key: '/monument',
-              icon: <VideoCameraOutlined />,
+              icon: <PushpinOutlined />,
               label: 'Gestion Monuments',
             },
             {
               key: '/utilisateur',
-              icon: <UploadOutlined />,
+              icon: <SolutionOutlined />,
               label: 'Gestion Utilisateurs',
             },
           ]}
@@ -88,21 +82,14 @@ const AppComponents = () => {
           <AppRoutes />
         </Content>
         <Footer
-        style={{
-          
-   
-          textAlign: 'center',
-          margin:10,
-          padding:10,
-          
-          
-          
-        }}
-      >
-        <Typography.Title level={5}>     Projet Pfa EMSI ©2024 Created by </Typography.Title>
-
-   
-      </Footer>
+          style={{
+            textAlign: 'center',
+            margin: 10,
+            padding: 10,
+          }}
+        >
+          <Typography.Title level={5}>Projet Pfa EMSI ©2024 Created by </Typography.Title>
+        </Footer>
       </Layout>
     </Layout>
   );

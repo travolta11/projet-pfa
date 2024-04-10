@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Calendar, theme, Col, Row, Statistic, Button } from 'antd';
-import { LikeOutlined } from '@ant-design/icons';
+import { LikeOutlined  } from '@ant-design/icons';
+import axios from 'axios';
 
 const { Title } = Typography;
 
@@ -9,7 +10,9 @@ const onPanelChange = (value, mode) => {
 };
 
 const DashBoard = () => {
-  
+  const [touristCount, setTouristCount] = useState(0);
+  const [monumentCount, setMonumentCount] = useState(0);
+
   const { token } = theme.useToken();
   const wrapperStyle = {
     width: '100%',
@@ -29,6 +32,24 @@ const DashBoard = () => {
     marginBottom: '16px',
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        const response = await axios.get('http://localhost:5000/tourist', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setTouristCount(response.data.length);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div style={wrapperStyle}>
       <Row gutter={[16, 16]}>
@@ -47,7 +68,7 @@ const DashBoard = () => {
             <Title level={4} style={titleStyle}>
               Nombre de touristes
             </Title>
-            <Statistic title="" value={112893} />
+            <Statistic title="" value={touristCount} />
           </div>
         </Col>
         <Col span={12}>
