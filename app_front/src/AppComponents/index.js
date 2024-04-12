@@ -1,18 +1,12 @@
-import React, { useState,useEffect } from 'react';
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  DashboardOutlined,
-} from '@ant-design/icons';
-import { useLocation, useNavigate,Outlet } from "react-router-dom";
-import { Layout, Menu, Button, theme,Typography, } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined, DashboardOutlined,PushpinOutlined,SolutionOutlined } from '@ant-design/icons';
+import { useLocation, useNavigate } from "react-router-dom";
+import { Layout, Menu, Button, theme, Typography, Row, Col, Space, Dropdown } from 'antd';
 import AppRoutes from '../AppRoutes';
 import './style.css';
-const { Header, Sider, Content , Footer} = Layout;
+import useUserData from '../useUserData'; 
 
+const { Header, Sider, Content, Footer } = Layout;
 
 const AppComponents = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -21,21 +15,49 @@ const AppComponents = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const pathName = location.pathname;
     setSelectedKeys(pathName);
   }, [location.pathname]);
-  const navigate = useNavigate();
+
+  const { userData, isLoading, error, username } = useUserData();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
+  const items = [
+    {
+      label: 'Profile',
+      key: '1',
+    },
+    {
+      label: 'Déconnexion',
+      key: '2',
+      onClick: handleLogout,
+      danger: true,
+    },
+  ];
+
+  const menuProps = {
+    items,
+  };
+
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
+        {/* Placeholder for logo */}
+        <div className="logo" > 
+          <span style={{ fontSize: '20px', color: 'white' }}>Admin Panel</span>
+        </div>
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['1']}
           onClick={(item) => {
-            //item.key
             navigate(item.key);
           }}
           selectedKeys={[selectedKeys]}
@@ -47,12 +69,12 @@ const AppComponents = () => {
             },
             {
               key: '/monument',
-              icon: <VideoCameraOutlined />,
+              icon: <PushpinOutlined />,
               label: 'Gestion Monuments',
             },
             {
               key: '/utilisateur',
-              icon: <UploadOutlined />,
+              icon: <SolutionOutlined />,
               label: 'Gestion Utilisateurs',
             },
           ]}
@@ -75,6 +97,22 @@ const AppComponents = () => {
               height: 64,
             }}
           />
+          <Row>
+            <Col
+              xs={{
+                span: 9,
+                offset: 14,
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "-50px" }}>
+                <Space wrap>
+                  <Dropdown.Button menu={menuProps} placement="bottom" icon={<UserOutlined />}>
+                    {username}
+                  </Dropdown.Button>
+                </Space>
+              </div>
+            </Col>
+          </Row>
         </Header>
         <Content
           style={{
@@ -88,22 +126,17 @@ const AppComponents = () => {
           <AppRoutes />
         </Content>
         <Footer
-        style={{
-          
-   
-          textAlign: 'center',
-          margin:10,
-          padding:10,
-          
-          
-          
-        }}
-      >
-        
-   
-      </Footer>
+          style={{
+            textAlign: 'center',
+            margin: 10,
+            padding: 10,
+          }}
+        >
+          <Typography.Title level={5}>Projet Pfa EMSI ©2024 Created by </Typography.Title>
+        </Footer>
       </Layout>
     </Layout>
   );
 };
+
 export default AppComponents;

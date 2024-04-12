@@ -1,6 +1,12 @@
 
 
-
+.logo {
+   height: 64px; /* Adjust height as needed */
+   margin-top: 20px;
+   align-items: center;
+   margin-left: 15px;
+   margin-bottom: 20px; /* Adjust the margin to create space between logo and sidebar items */
+ }
 /* .App {
     height: 100%;
     margin: 0;
