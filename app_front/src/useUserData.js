@@ -10,8 +10,8 @@ const useUserData = () => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem('token');
-        if (token) {
-          const response = await axios.get('http://localhost:5000/api/user', {
+        if (token) { 
+          const response = await axios.get('http://localhost:5000/api/user', { 
             headers: {
               Authorization: `Bearer ${token}`,
             },
