@@ -20,5 +20,3 @@ bcrypt.hash(plainPassword, saltRounds, (err, hash) => {
         // });
     }
 });
-
-

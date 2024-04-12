@@ -1,0 +1,16 @@
+.searchContainer {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+  }
+  .searchInput {
+    margin-right: 8px;
+    width: 200px;
+  }
+  
+  .searchButton {
+    margin-right: 8px;
+  }
+  .leftButton {
+    margin-left: 20px;
+  }
