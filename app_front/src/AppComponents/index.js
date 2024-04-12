@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { MenuFoldOutlined, MenuUnfoldOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined, DashboardOutlined, PushpinOutlined, SolutionOutlined } from '@ant-design/icons';
-import { useLocation, useNavigate, Outlet } from "react-router-dom";
-import { Layout, Menu, Button, theme, Typography } from 'antd';
+import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined, DashboardOutlined,PushpinOutlined,SolutionOutlined } from '@ant-design/icons';
+import { useLocation, useNavigate } from "react-router-dom";
+import { Layout, Menu, Button, theme, Typography, Row, Col, Space, Dropdown } from 'antd';
 import AppRoutes from '../AppRoutes';
 import './style.css';
+import useUserData from '../useUserData'; 
+
 const { Header, Sider, Content, Footer } = Layout;
 
 const AppComponents = () => {
@@ -13,18 +15,44 @@ const AppComponents = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const pathName = location.pathname;
     setSelectedKeys(pathName);
   }, [location.pathname]);
-  const navigate = useNavigate();
+
+  const { userData, isLoading, error, username } = useUserData();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
+  const items = [
+    {
+      label: 'Profile',
+      key: '1',
+    },
+    {
+      label: 'Déconnexion',
+      key: '2',
+      onClick: handleLogout,
+      danger: true,
+    },
+  ];
+
+  const menuProps = {
+    items,
+  };
+
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         {/* Placeholder for logo */}
         <div className="logo" > 
-    <span style={{ fontSize: '20px', color: 'white' }}>Admin Panel</span>
-  </div>
+          <span style={{ fontSize: '20px', color: 'white' }}>Admin Panel</span>
+        </div>
         <Menu
           theme="dark"
           mode="inline"
@@ -69,6 +97,22 @@ const AppComponents = () => {
               height: 64,
             }}
           />
+          <Row>
+            <Col
+              xs={{
+                span: 9,
+                offset: 14,
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "-50px" }}>
+                <Space wrap>
+                  <Dropdown.Button menu={menuProps} placement="bottom" icon={<UserOutlined />}>
+                    {username}
+                  </Dropdown.Button>
+                </Space>
+              </div>
+            </Col>
+          </Row>
         </Header>
         <Content
           style={{
@@ -94,4 +138,5 @@ const AppComponents = () => {
     </Layout>
   );
 };
+
 export default AppComponents;
