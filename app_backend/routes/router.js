@@ -8,6 +8,21 @@ const monumentController = require('../controllers/monumentController');
 const adminController=require('../controllers/adminController');
 const touristController=require('../controllers/touristController');
 const avisController=require('../controllers/avisController')
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, 'uploads')); // Use path.join to specify the uploads folder relative to the current file
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname); // Define the filename for uploaded files
+  }
+});
+
+
+const upload = multer({ storage: storage });
+
 
 router.get('/', (req, res) => {
     res.send('Hello from homepage.');
@@ -18,7 +33,7 @@ router.get('/', (req, res) => {
 //get api
 router.get('/monument', monumentController.getAllMonuments);
 //add api
-router.post('/monument',monumentController.addMonument);
+router.post('/monument', upload.array('images', 5), monumentController.addMonument);
 //delete api
 router.delete('/monument/:id', monumentController.deleteMonument); 
 //update api
@@ -26,6 +41,7 @@ router.put('/monument/:id', monumentController.updateMonument);
 //get api by id
 router.get('/monument/:id', monumentController.getMonumentById);
 //Monument CRUD API
+
 
 //Admin CRUD API
 //get api
