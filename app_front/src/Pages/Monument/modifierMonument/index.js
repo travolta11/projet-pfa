@@ -128,7 +128,18 @@ const modifierMonument = () => {
         >
           <Input />
         </Form.Item>
-
+        <Form.Item
+            label="Créateur"
+            name="createur"
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez saisir le créateur',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit" className="submit-button">
            Modifier
