@@ -30,7 +30,7 @@ const VoirMonument = () => {
   }, [id]);
 
   if (loading) {
-    return <Spin size="large" />;
+    return <Spin size="large"  />;
   }
 
   if (error) {
@@ -53,7 +53,7 @@ const VoirMonument = () => {
       <p><strong>Avis:</strong> {avis}</p>
       <p><strong>Description:</strong> {description}</p>
 
-      <Carousel autoplay>
+      <Carousel autoplay style={{  width: '600px' }}>
         {images.map((image, index) => (
           <div key={index}>
             <img src={image} alt={`Image ${index}`} style={{ width: '600px', height: '500px' }}  />

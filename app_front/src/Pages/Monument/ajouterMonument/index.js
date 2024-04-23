@@ -174,6 +174,9 @@ const AjouterMonument = () => {
             <Button type="primary" htmlType="submit" className="submit-button">
               Ajouter
             </Button>
+            <Button type="default" onClick={() => navigate('/monument')} className="cancel-button">
+              Annuler
+            </Button>
           </Form.Item>
         </Form>
       </div>
