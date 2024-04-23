@@ -25,8 +25,8 @@ function AppRoutes(){
           {/* Monument*/}
           <Route path="/monument" element={<Monument />} />
           <Route path="/monument/ajouterM" element={<AjouterM/>} />
-          <Route path="/monument/modifierM" element={<ModifierM />} />
-          <Route path="/monument/voirMonument" element={<VoirMonument />} />
+          <Route path="/monument/modifierM/:id" element={<ModifierM />} />
+          <Route path="/monument/voirMonument/:id" element={<VoirMonument />} />
 
           {/* Utilisateur*/}
           <Route path="/utilisateur" element={<Utilisateur />} />

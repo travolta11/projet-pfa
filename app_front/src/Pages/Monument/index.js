@@ -26,6 +26,7 @@ const Monument = () => {
           Ville: monument.ville,
           Horaire: monument.horaire,
           Frais: monument.frais,
+         
         }));
         setData(formattedData);
       } catch (error) {
@@ -99,9 +100,16 @@ const Monument = () => {
   const handleAddMonument = () => {
     navigate('/monument/ajouterM'); 
   };
-  const handleVoir = () => {
-    navigate('/monument/voirMonument'); 
+ 
+  const modifierMonument = (id) => {
+    navigate(`/monument/modifierM/${id}`);
   };
+  
+  
+  const voirMonuments = (id) => {
+    navigate(`/monument/voirMonument/${id}`);
+  };
+
   const columns = [
     {
       title: 'ID',
@@ -135,13 +143,14 @@ const Monument = () => {
       key: 'Frais',
       ...getColumnSearchProps('Frais', 'Frais'),
     },
+    
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={()=> handleVoir()}>Voir</Button>
-          <Button type="primary">Modifier</Button>
+          <Button onClick={() => voirMonuments(record.id)}>Voir</Button>
+          <Button type="primary" onClick={() => modifierMonument(record.id)}>Modifier</Button>
           <Button danger onClick={() => handleDelete(record.id)}>
             Supprimer
           </Button>

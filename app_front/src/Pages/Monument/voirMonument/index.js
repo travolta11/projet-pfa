@@ -1,29 +1,51 @@
-import React from 'react';
-import { Card, Carousel } from 'antd';
-import './styles.css'
+import { Card, Carousel, Spin, Typography } from 'antd';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 const { Meta } = Card;
+const { Title } = Typography;
 
 const VoirMonument = () => {
-  const data = {
-    "titre": "Palais de la Bahia",
-    "description": "Le Palais de la Bahia est un magnifique palais situé dans la médina de Marrakech, au Maroc. Construit à la fin du XIXe siècle, ce palais est réputé pour son architecture marocaine traditionnelle et sa splendeur. Il est considéré comme l'un des sites les plus emblématiques de Marrakech et attire des milliers de visiteurs chaque année.",
-    "ville": "Marrakech",
-    "createur": "Si Moussa",
-    "horaire": "09:00 AM 06:00 PM",
-    "frais": "50 DH",
-    "avis": 5,
-    "images": [
-      "https://cdn.glitch.global/d909b612-2c11-45a8-a0be-eeac87381e02/gettyimages-982756382-612x612.jpg?v=1713482036224",
-      "https://cdn.glitch.global/d909b612-2c11-45a8-a0be-eeac87381e02/gettyimages-982756382-612x612.jpg?v=1713482036224",
-      "https://cdn.glitch.global/d909b612-2c11-45a8-a0be-eeac87381e02/gettyimages-982756382-612x612.jpg?v=1713482036224"
-    ]
-  };
+  const { id } = useParams();
 
-  const { titre, ville, createur, horaire, frais, avis, description, images } = data;
+  const [monumentData, setMonumentData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchMonumentData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/monument/${id}`);
+        setMonumentData(response.data);
+      } catch (error) {
+        console.error('Error fetching monument data:', error);
+        setError('Error fetching monument data. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMonumentData();
+  }, [id]);
+
+  if (loading) {
+    return <Spin size="large" />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!monumentData) {
+    return <div>No monument data found</div>;
+  }
+
+  const { titre, ville, createur, horaire, frais, avis, description, images } = monumentData;
 
   return (
     <div>
-      <h1>{titre}</h1>
+      <Title level={2}>{titre}</Title>
       <p><strong>Ville:</strong> {ville}</p>
       <p><strong>Créateur:</strong> {createur}</p>
       <p><strong>Horaire:</strong> {horaire}</p>

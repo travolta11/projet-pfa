@@ -31,10 +31,12 @@ static async addMonument(req, res) {
         createur,
         horaire,
         frais,
-        avis
+        avis,
+        images  // Assuming images are now sent as URLs in the request body
       } = req.body;
   
-      const images = req.files.map(file => file.path);
+      // No need to map file paths since you're expecting image URLs
+      // const images = req.files.map(file => file.path);
   
       const addedM = await Monument.addMonuments(
         titre,
@@ -46,7 +48,7 @@ static async addMonument(req, res) {
         horaire,
         frais,
         avis,
-        images
+        images  // Pass image URLs directly to the addMonuments function
       );
   
       if (addedM) {
@@ -59,6 +61,7 @@ static async addMonument(req, res) {
       res.status(500).send('Internal Server Error');
     }
   }
+  
   
 //add controller................................................................
 
@@ -109,21 +112,29 @@ static async addMonument(req, res) {
 
 
 //get by id controller.......................................................
-    static async getMonumentById(req, res) {
-        const monumentId = req.params.id;
-
-        try {
-            const monument = await Monument.getMonumentById(monumentId);
-            if (monument) {
-                res.status(200).json(monument);
-            } else {
-                res.status(404).json({ error: 'Monument not found.' });
-            }
-        } catch (error) {
-            console.error('Error fetching monument:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
+    
+static async getMonumentById(req, res) {
+    const monumentId = req.params.id;
+  
+    try {
+      const monument = await Monument.getMonumentById(monumentId);
+      if (monument) {
+        // Split the string of image URLs into an array
+        monument.images = monument.images.split(',');
+  
+        // Trim whitespace from each URL
+        monument.images = monument.images.map(url => url.trim());
+  
+        res.status(200).json(monument);
+      } else {
+        res.status(404).json({ error: 'Monument not found.' });
+      }
+    } catch (error) {
+      console.error('Error fetching monument:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
+  }
+  
     //get by id controller.......................................................
 
 
