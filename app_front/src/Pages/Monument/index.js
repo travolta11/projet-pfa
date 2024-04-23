@@ -1,17 +1,113 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.css';
-import { Table, Pagination, Tag, Space, Button, Input } from 'antd';
-import { SearchOutlined, UserAddOutlined } from '@ant-design/icons';
+import { Table, Pagination, Space, Button, Input, message } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { useNavigate  } from 'react-router-dom'; 
+import axios from 'axios';
 
-
-const showTotal = (total) => `Total: ${total}, items`;
+const showTotal = (total) => `Total ${total} items`;
 
 const Monument = () => {
-  const [current, setCurrent] = useState(3);
+  const [current, setCurrent] = useState(1);
+  const [data, setData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+ 
+  const navigate = useNavigate(); 
+
+  // Fetch monument data
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/monument');
+        const formattedData = response.data.map((monument, index) => ({
+          key: index,
+          id: monument.id,
+          Titre: monument.titre,
+          Ville: monument.ville,
+          Horaire: monument.horaire,
+          Frais: monument.frais,
+         
+        }));
+        setData(formattedData);
+      } catch (error) {
+        console.error('Error fetching monument data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const onChange = (page) => {
-    console.log(page);
     setCurrent(page);
+  };
+
+  const onSearch = (value) => {
+    setSearchQuery(value);
+  };
+
+  const filteredData = data.filter((item) => {
+    return (
+      item.id.toString().includes(searchQuery) ||
+      item.Titre.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
+
+  const getColumnSearchProps = (dataIndex, title) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          placeholder={`Search ${title}`}
+          value={selectedKeys[0]}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => confirm()}
+          style={{ marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => confirm()}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button onClick={() => clearFilters()} size="small" style={{ width: 90 }}>
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+    onFilter: (value, record) =>
+      record[dataIndex]
+        ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+        : '',
+  });
+
+  // Delete monument by id
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/monument/${id}`);
+      message.success('Monument deleted successfully');
+      setData(data.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error('Error deleting monument:', error);
+      message.error('Error deleting monument');
+    }
+  };
+
+  const handleAddMonument = () => {
+    navigate('/monument/ajouterM'); 
+  };
+ 
+  const modifierMonument = (id) => {
+    navigate(`/monument/modifierM/${id}`);
+  };
+  
+  
+  const voirMonuments = (id) => {
+    navigate(`/monument/voirMonument/${id}`);
   };
 
   const columns = [
@@ -19,82 +115,77 @@ const Monument = () => {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
+      sorter: (a, b) => a.id - b.id,
+      ...getColumnSearchProps('id', 'ID'),
     },
     {
       title: 'Titre',
-      dataIndex: 'titre',
-      key: 'titre',
+      dataIndex: 'Titre',
+      key: 'Titre',
       render: (text) => <a>{text}</a>,
+      ...getColumnSearchProps('Titre', 'Titre'),
     },
     {
       title: 'Ville',
-      dataIndex: 'ville',
-      key: 'ville',
+      dataIndex: 'Ville',
+      key: 'Ville',
+      ...getColumnSearchProps('Ville', 'Ville'),
     },
     {
       title: 'Horaire',
-      dataIndex: 'horaire',
-      key: 'horaire',
+      dataIndex: 'Horaire',
+      key: 'Horaire',
+      ...getColumnSearchProps('Horaire', 'Horaire'),
     },
     {
       title: 'Frais',
-      dataIndex: 'frais',
-      key: 'frais',
+      dataIndex: 'Frais',
+      key: 'Frais',
+      ...getColumnSearchProps('Frais', 'Frais'),
     },
+    
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Button>Voir</Button>
-          <Button type="primary">Modifier</Button>
-          <Button danger>Supprimer</Button>
+          <Button onClick={() => voirMonuments(record.id)}>Voir</Button>
+          <Button type="primary" onClick={() => modifierMonument(record.id)}>Modifier</Button>
+          <Button danger onClick={() => handleDelete(record.id)}>
+            Supprimer
+          </Button>
         </Space>
       ),
     },
   ];
 
-  const data = [
-    {
-      key: '1',
-      Nom: '',
-      Email: '',
-      createur: '',
-    },
-    {
-      key: '2',
-      Nom: '',
-      Email: '',
-      createur: '',
-    },
-{
-      key: '3',
-      Nom: '',
-      Email: '',
-      createur: '',
-    },
-  ];
-
   return (
     <>
-      <h1> historique</h1>
+      <h1>Monument</h1>
 
       <div className="searchContainer">
-      <div className="searchInputWrapper">
-        <Input placeholder="Rechercher un utilisateur" className="searchInput" />
+        <Input
+          placeholder="Rechercher un monument"
+          className="searchInput"
+          onChange={(e) => onSearch(e.target.value)}
+        />
         <Button type="primary" icon={<SearchOutlined />} className="searchButton"></Button>
+        <Button type="primary" className="addButton leftButton" onClick={handleAddMonument}>
+          Ajouter un Monument
+        </Button>
       </div>
-      <Button type="primary" className="addButton leftButton">
-        Ajouter un Monument
-      </Button>
-    </div>
-      
 
-      <Table columns={columns} dataSource={data} pagination={false} />
-
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-        <Pagination current={current} onChange={onChange} total={50} showTotal={showTotal} />
-      </div>
+      <Table
+        columns={columns}
+        dataSource={filteredData}
+        pagination={{
+          current: current,
+          pageSize: 5,
+          total: filteredData.length,
+          onChange: onChange,
+          showTotal: showTotal,
+        }}
+      />
     </>
   );
 };

@@ -8,6 +8,12 @@ const monumentController = require('../controllers/monumentController');
 const adminController=require('../controllers/adminController');
 const touristController=require('../controllers/touristController');
 const avisController=require('../controllers/avisController')
+const path = require('path');
+
+
+
+
+
 
 router.get('/', (req, res) => {
     res.send('Hello from homepage.');
@@ -18,7 +24,7 @@ router.get('/', (req, res) => {
 //get api
 router.get('/monument', monumentController.getAllMonuments);
 //add api
-router.post('/monument',monumentController.addMonument);
+router.post('/monument', monumentController.addMonument);
 //delete api
 router.delete('/monument/:id', monumentController.deleteMonument); 
 //update api
@@ -26,6 +32,7 @@ router.put('/monument/:id', monumentController.updateMonument);
 //get api by id
 router.get('/monument/:id', monumentController.getMonumentById);
 //Monument CRUD API
+
 
 //Admin CRUD API
 //get api

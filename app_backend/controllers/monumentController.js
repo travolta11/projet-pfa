@@ -20,24 +20,49 @@ class MonumentController {
 
 
 //add controller................................................................
-    static async addMonument(req,res){
-            var titre=  req.body.titre;
-            var description = req.body.description;
-            var localisation =  req.body.localisation;
-            var ville =  req.body.ville;
-            var id_admin =  req.body.id_admin;
-            var createur =  req.body.createur;
-            var horaire =  req.body.horaire;
-            var frais = req.body.frais;
-            var avis = req.body.avis;
-            var images = req.body.images;
-        var addedM = await Monument.addMonuments(titre,description,localisation,ville,id_admin,createur,horaire,frais,avis,images)
-            if(addedM==true)
-            res.send('add succesfully')
-                else
-                
-                res.send('add failed')
+static async addMonument(req, res) {
+    try {
+      const {
+        titre,
+        description,
+        localisation,
+        ville,
+        id_admin,
+        createur,
+        horaire,
+        frais,
+        avis,
+        images  // Assuming images are now sent as URLs in the request body
+      } = req.body;
+  
+      // No need to map file paths since you're expecting image URLs
+      // const images = req.files.map(file => file.path);
+  
+      const addedM = await Monument.addMonuments(
+        titre,
+        description,
+        localisation,
+        ville,
+        id_admin,
+        createur,
+        horaire,
+        frais,
+        avis,
+        images  // Pass image URLs directly to the addMonuments function
+      );
+  
+      if (addedM) {
+        res.send('Monument added successfully');
+      } else {
+        res.status(500).send('Failed to add monument');
+      }
+    } catch (error) {
+      console.error('Error adding monument:', error);
+      res.status(500).send('Internal Server Error');
     }
+  }
+  
+  
 //add controller................................................................
 
 
@@ -87,21 +112,29 @@ class MonumentController {
 
 
 //get by id controller.......................................................
-    static async getMonumentById(req, res) {
-        const monumentId = req.params.id;
-
-        try {
-            const monument = await Monument.getMonumentById(monumentId);
-            if (monument) {
-                res.status(200).json(monument);
-            } else {
-                res.status(404).json({ error: 'Monument not found.' });
-            }
-        } catch (error) {
-            console.error('Error fetching monument:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
+    
+static async getMonumentById(req, res) {
+    const monumentId = req.params.id;
+  
+    try {
+      const monument = await Monument.getMonumentById(monumentId);
+      if (monument) {
+        // Split the string of image URLs into an array
+        monument.images = monument.images.split(',');
+  
+        // Trim whitespace from each URL
+        monument.images = monument.images.map(url => url.trim());
+  
+        res.status(200).json(monument);
+      } else {
+        res.status(404).json({ error: 'Monument not found.' });
+      }
+    } catch (error) {
+      console.error('Error fetching monument:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
+  }
+  
     //get by id controller.......................................................
 
 
