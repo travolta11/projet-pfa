@@ -93,6 +93,27 @@ router.post('/login',(req,res)=>{
 
     })
 });
+router.post('/signin',(req,res)=>{
+  const sql = "SELECT * FROM tourist WHERE email = ? AND password = ?";
+  const email = req.body.email;
+  const password = req.body.password;
+  db.query(sql,[email,password],(err,data)=>{
+      if(err){
+          return res.json("error");
+      }
+      if(data.length > 0){
+          const id = data[0].id;
+        const token =  jwt.sign({id},"issam",{expiresIn: 30000});
+          return res.json({Login:true,token,data});
+
+      }else {
+          return res.json("fail");
+      }
+
+  })
+});
+
+
 
 router.post('/signup', async (req, res) => {
   try {
