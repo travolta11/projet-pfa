@@ -50,6 +50,26 @@ const DashBoard = () => {
     fetchData();
   }, []);
 
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        const response = await axios.get('http://localhost:5000/monument', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setMonumentCount(response.data.length);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div style={wrapperStyle}>
       <Row gutter={[16, 16]}>
@@ -76,7 +96,7 @@ const DashBoard = () => {
             <Title level={4} style={titleStyle}>
               Nombre de monuments
             </Title>
-            <Statistic title="" value={112} />
+            <Statistic title="" value={monumentCount} />
           </div>
         </Col>
       </Row>

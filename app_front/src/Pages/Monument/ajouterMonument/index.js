@@ -1,12 +1,10 @@
 import React from 'react';
-import { Form, Input, Button, Upload } from 'antd';
+import { Form, Input, Button } from 'antd';
 import './index.css';
 import useUserData from '../../../useUserData';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { InboxOutlined  } from '@ant-design/icons';
 
-const { Dragger } = Upload;
 const layout = {
   labelCol: {
     span: 6,
@@ -28,32 +26,15 @@ const AjouterMonument = () => {
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
-  try {
-    const formData = new FormData();
-    Object.keys(values).forEach(key => {
-      if (key === 'images') {
-        values[key].forEach(file => {
-          formData.append('images', file.originFileObj);
-        });
-      } else {
-        formData.append(key, values[key]);
-      }
-    });
-    formData.append('id_admin', id_admin);
-
-    await axios.post('http://localhost:5000/monument', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-
-    console.log('Form submitted:', values);
-    navigate('/monument');
-  } catch (error) {
-    console.log('Form submission failed:', error);
-  }
-};
-
+    try {
+      const formData = { ...values, id_admin };
+      await axios.post('http://localhost:5000/monument', formData);
+      console.log('Form submitted:', values);
+      navigate('/monument');
+    } catch (error) {
+      console.log('Form submission failed:', error);
+    }
+  };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Form submission failed:', errorInfo);
@@ -82,83 +63,101 @@ const AjouterMonument = () => {
             <Input />
           </Form.Item>
 
+          {/* Add input field for image URLs */}
           <Form.Item
-          label="Description"
-          name="description"
-          rules={[
-            {
-              required: true,
-              message: 'Veuillez saisir la description',
-            },
-          ]}
-        >
-          <Input.TextArea />
-        </Form.Item>
+            label="URL des images"
+            name="images"
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez saisir les URLs des images',
+              },
+            ]}
+          >
+            <Input.TextArea placeholder="Entrez les URLs des images séparées par des virgules" />
+          </Form.Item>
 
-        <Form.Item
-          label="Localisation"
-          name="localisation"
-          rules={[
-            {
-required: true,
-              message: 'Veuillez saisir la localisation',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+          <Form.Item
+            label="Description"
+            name="description"
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez saisir la description',
+              },
+            ]}
+          >
+            <Input.TextArea />
+          </Form.Item>
 
-        <Form.Item
-          label="Ville"
-          name="ville"
-          rules={[
-            {
-              required: true,
-              message: 'Veuillez saisir la ville',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+        
 
-        <Form.Item
-          label="Horaire"
-          name="horaire"
-          rules={[
-            {
-              required: true,
-              message: 'Veuillez saisir l\'horaire',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-  <Form.Item
-          label="Frais"
-          name="frais"
-          rules={[
-            {
-              required: true,
-              message: 'Veuillez saisir les frais',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+          <Form.Item
+            label="Localisation"
+            name="localisation"
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez saisir la localisation',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
 
-        <Form.Item
-          label="Avis"
-          name="avis"
-          rules={[
-            {
-              required: true,
-              message: 'Veuillez saisir votre\'avis',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
+          <Form.Item
+            label="Ville"
+            name="ville"
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez saisir la ville',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Horaire"
+            name="horaire"
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez saisir l\'horaire',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Frais"
+            name="frais"
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez saisir les frais',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Avis"
+            name="avis"
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez saisir votre avis',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
             label="Créateur"
             name="createur"
             rules={[
@@ -169,34 +168,14 @@ required: true,
             ]}
           >
             <Input />
-          </Form.Item>
-
-          {/* Add Upload component for images */}
-          <Form.Item
-            label="Images"
-            name="images"
-            valuePropName="fileList"
-            getValueFromEvent={(e) => e && e.fileList}
-            rules={[
-              {
-                required: true,
-                message: 'Veuillez télécharger les images',
-              },
-            ]}
-          >
-            <Upload.Dragger>
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <p className="ant-upload-text">Cliquez ou glissez-déposez pour télécharger</p>
-            </Upload.Dragger>
-          </Form.Item>
-
-          
+          </Form.Item>  
 
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit" className="submit-button">
               Ajouter
+            </Button>
+            <Button type="default" onClick={() => navigate('/monument')} className="cancel-button">
+              Annuler
             </Button>
           </Form.Item>
         </Form>

@@ -140,7 +140,7 @@ const Utilisateur = () => {
       render: (_, record) => (
         <Space size="middle">
           <Button danger onClick={() => handleDelete(record.id)}>
-            Supprimer
+            Desactiver le compte
           </Button>
       
         </Space>

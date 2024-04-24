@@ -3,7 +3,7 @@ import './index.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Checkbox, Form, Avatar, Space, Input } from 'antd';
+import { Button, Checkbox, Form, Avatar, Space, Input,message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 const Login = () => {
@@ -18,6 +18,7 @@ const Login = () => {
         navigate('/');
       } else {
         console.log('Login failed:', data);
+        message.error('Email ou mot de passe incorrect');
       }
     } catch (error) {
       console.error('Error:', error);

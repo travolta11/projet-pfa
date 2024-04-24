@@ -7,6 +7,7 @@ import AjouterM from "../Pages/Monument/ajouterMonument";
 import ModifierM from "../Pages/Monument/modifierMonument";
 import ProtectedRoute from "./ProtectedRoute";
 import Login from "../Pages/Login";
+import VoirMonument from "../Pages/Monument/voirMonument";
 function AppRoutes(){
 
     const location=useLocation();
@@ -24,7 +25,8 @@ function AppRoutes(){
           {/* Monument*/}
           <Route path="/monument" element={<Monument />} />
           <Route path="/monument/ajouterM" element={<AjouterM/>} />
-          <Route path="/monument/modifierM" element={<ModifierM />} />
+          <Route path="/monument/modifierM/:id" element={<ModifierM />} />
+          <Route path="/monument/voirMonument/:id" element={<VoirMonument />} />
 
           {/* Utilisateur*/}
           <Route path="/utilisateur" element={<Utilisateur />} />
