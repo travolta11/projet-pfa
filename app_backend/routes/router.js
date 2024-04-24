@@ -94,6 +94,25 @@ router.post('/login',(req,res)=>{
     })
 });
 
+router.post('/signup', async (req, res) => {
+  try {
+      const { username, email, password } = req.body;
+      // Check if user already exists
+      const [existingUsers] = await db.promise().query('SELECT * FROM tourist WHERE email = ?', [email]);
+      if (existingUsers.length > 0) {
+          return res.status(400).json({ msg: 'User already exists' });
+      }
+      
+      // Insert new user into database
+      await db.promise().query('INSERT INTO tourist (username, email, password, id_admin) VALUES (?, ?, ?, ?)', [username, email, password, 4]);
+      res.status(201).json({ msg: 'User registered successfully' });
+  } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+  }
+});
+
+
 
 router.get('/api/user', authenticateToken, (req, res) => {
     const userId = req.user.id;
