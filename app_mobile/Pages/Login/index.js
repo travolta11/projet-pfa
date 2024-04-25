@@ -4,25 +4,59 @@ import Logo from '../../assets/images/img.png';
 
 const Login = () => {
   const [showSignupForm, setShowSignupForm] = useState(false);
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [nameError, setNameError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [signinError, setSigninError] = useState('');
-  const [nameTouched, setNameTouched] = useState(false);
+  const [usernameTouched, setUsernameTouched] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [confirmPasswordTouched, setConfirmPasswordTouched] = useState(false);
+  const [usernameValid, setUsernameValid] = useState(true);
+  const [emailValid, setEmailValid] = useState(true);
+
+  const handleUsernameChange = (text) => {
+    setUsername(text);
+    if (!text) {
+      setUsernameError('Please fill in your username.');
+      setUsernameValid(false);
+    } else {
+      setUsernameError('');
+      setUsernameValid(true);
+    }
+  };
+
+  const handleEmailChange = (text) => {
+    setEmail(text);
+    if (!text) {
+      setEmailError('Please fill in your email.');
+      setEmailValid(false);
+    } else {
+      setEmailError('');
+      setEmailValid(true);
+    }
+  };
 
   const handleSignupPress = () => {
     let isValid = true;
 
-    if (!name) {
-      setNameError('Please fill in your name.');
+    if (!username) {
+      setUsernameError('Please fill in your username.');
       isValid = false;
     } else {
-      setNameError('');
+      setUsernameError('');
+    }
+
+    if (!email) {
+      setEmailError('Please fill in your email.');
+      isValid = false;
+    } else {
+      setEmailError('');
     }
 
     if (!password) {
@@ -43,137 +77,137 @@ const Login = () => {
     }
 
     if (isValid) {
-      setShowSignupForm(false); // Change to login form after successful signup
-      setName(''); // Reset name field
-      setPassword(''); // Reset password field
-      setConfirmPassword(''); // Reset confirm password field
-      // Alert success message
+      setShowSignupForm(false);
+      setUsername('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      setSigninError('');
       Alert.alert('Success', 'Sign up successful!');
-      // Handle signup logic
     }
   };
 
   const handleSigninPress = () => {
-    if (name === '' || password === '') {
+    // Vérification des champs email et mot de passe pour la connexion
+    if (email === '' || password === '') {
       setSigninError('Please fill in all fields.');
       return;
     }
 
-    // Send the name and password to the backend for verification
-
-    // Upon successful verification, set the success message
-    // setSuccessMessage('Sign in successful!');
-    // Clear any previous signin error message
     setSigninError('');
-
-    // Handle signin logic in the backend
+    setShowSignupForm(false);
+   
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.logoContainer}>
-          <Image source={Logo} style={styles.logo} resizeMode='contain' />
-          <View style={styles.loginWrapper}>
-            <Text style={styles.loginText}>{showSignupForm ? 'Sign Up' : 'Sign In'}</Text>
-          </View>
-        </View>
-        {showSignupForm ? (
-          <View style={styles.formContainer}>
-            <Text style={styles.label}>Enter your name</Text>
-            <TextInput
-              placeholder="Name"
-              style={[
-                styles.input,
-                (nameError || (nameTouched && !name)) && !nameError ? styles.errorInput : null,
-              ]}
-              value={name}
-              onChangeText={text => {
-                setName(text);
-                setNameTouched(true);
-                if (nameError && text.length > 0) {
-                  setNameError('');
-                }
-              }}
-            />
-
-            {nameError || (nameTouched && !name) ? <Text style={styles.errorText}>Please fill in your name.</Text> : null}
-
-            <Text style={styles.label}>Enter your password</Text>
-            <TextInput
-              placeholder="Password"
-              style={[
-                styles.input,
-                (passwordError || (passwordTouched && !password)) && !passwordError ? styles.errorInput : null,
-              ]}
-              value={password}
-              onChangeText={text => {
-                setPassword(text);
-                setPasswordTouched(true);
-                if (passwordError && text.length > 0) {
-                  setPasswordError('');
-                }
-              }}
-              secureTextEntry={true}
-            />
-
-            {passwordError || (passwordTouched && !password) ? <Text style={styles.errorText}>Please fill in your password.</Text> : null}
-
-            <Text style={styles.label}>Confirm your password</Text>
-            <TextInput
-              placeholder="Confirm Password"
-              style={[
-                styles.input,
-                (confirmPasswordError || (confirmPasswordTouched && !confirmPassword)) && !confirmPasswordError ? styles.errorInput : null,
-              ]}
-              value={confirmPassword}
-              onChangeText={text => {
-                setConfirmPassword(text);
-                setConfirmPasswordTouched(true);
-                if (confirmPasswordError && text.length > 0) {
-                  setConfirmPasswordError('');
-                }
-              }}
-              secureTextEntry={true}
-            />
-
-            {confirmPasswordError || (confirmPasswordTouched && !confirmPassword) ? <Text style={styles.errorText}>Please fill in the confirm password.</Text> : null}
-
-            <TouchableOpacity style={styles.button} onPress={handleSignupPress}>
-              <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.formContainer}>
-            <Text style={styles.label}>Enter your username</Text>
-            <TextInput
-              placeholder="Username"
-              style={styles.input}
-              value={name}
-              onChangeText={text => setName(text)}
-            />
-            <Text style={styles.label}>Enter your password</Text>
-            <TextInput
-              placeholder="Password"
-              style={styles.input}
-              value={password}
-              onChangeText={text => setPassword(text)}
-              secureTextEntry={true}
-            />
-            {signinError ? <Text style={styles.errorText}>{signinError}</Text> : null}
-            <TouchableOpacity style={styles.button} onPress={handleSigninPress}>
-              <Text style={styles.buttonText}>Sign In</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => { setShowSignupForm(true); setName(''); setPassword(''); }}>
-              <Text style={styles.signupLink}>Sign Up</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+  <View style={styles.content}>
+    <View style={styles.logoContainer}>
+      <Image source={Logo} style={styles.logo} resizeMode='contain' />
+      <View style={styles.loginWrapper}>
+        <Text style={styles.loginText}>{showSignupForm ? 'Sign Up' : 'Sign In'}</Text>
       </View>
     </View>
-  );
-}
+    {showSignupForm ? (
+      <View style={styles.formContainer}>
+        <Text style={styles.label}>Enter your username</Text>
+<TextInput
+  placeholder="Username"
+  style={[
+    styles.input,
+    usernameTouched && !usernameValid ? styles.errorInput : null,
+  ]}
+  value={username}
+  onChangeText={handleUsernameChange}
+/>
+{usernameError || (usernameTouched && !username) ? <Text style={styles.errorText}>Please fill in your username.</Text> : null}
 
+
+<Text style={styles.label}>Enter your email</Text>
+<TextInput
+  placeholder="Email"
+  style={[
+    styles.input,
+    emailTouched && !emailValid ? styles.errorInput : null,
+  ]}
+  value={email}
+  onChangeText={handleEmailChange}
+/>
+{emailError || (emailTouched && !email) ? <Text style={styles.errorText}>Please fill in your email.</Text> : null}
+
+        <Text style={styles.label}>Enter your password</Text>
+        <TextInput
+          placeholder="Password"
+          style={[
+            styles.input,
+            (passwordError || (passwordTouched && !password)) && !passwordError ? styles.errorInput : null,
+          ]}
+          value={password}
+          onChangeText={text => {
+            setPassword(text);
+            setPasswordTouched(true);
+            if (passwordError && text.length > 0) {
+              setPasswordError('');
+            }
+          }}
+          secureTextEntry={true}
+        />
+        {passwordError || (passwordTouched && !password) ? <Text style={styles.errorText}>Please fill in your password.</Text> : null}
+
+        <Text style={styles.label}>Confirm your password</Text>
+        <TextInput
+          placeholder="Confirm Password"
+          style={[
+            styles.input,
+            (confirmPasswordError || (confirmPasswordTouched && !confirmPassword)) && !confirmPasswordError ? styles.errorInput : null,
+          ]}
+          value={confirmPassword}
+          onChangeText={text => {
+            setConfirmPassword(text);
+            setConfirmPasswordTouched(true);
+            if (confirmPasswordError && text.length > 0) {
+              setConfirmPasswordError('');
+            }
+          }}
+          secureTextEntry={true}
+        />
+        {confirmPasswordError || (confirmPasswordTouched && !confirmPassword) ? <Text style={styles.errorText}>Please fill in the confirm password.</Text> : null}
+
+        <TouchableOpacity style={styles.button} onPress={handleSignupPress} disabled={!usernameValid || !emailValid}>
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>
+    ) : (
+      <View style={styles.formContainer}>
+        <Text style={styles.label}>Enter your email</Text>
+        <TextInput
+          placeholder="Email"
+          style={styles.input}
+          value={email}
+          onChangeText={text => setEmail(text)}
+        />
+        <Text style={styles.label}>Enter your password</Text>
+        <TextInput
+          placeholder="Password"
+          style={styles.input}
+          value={password}
+          onChangeText={text => setPassword(text)}
+          secureTextEntry={true}
+        />
+        {signinError ? <Text style={styles.errorText}>{signinError}</Text> : null}
+        <TouchableOpacity style={styles.button} onPress={handleSigninPress}>
+          <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => { setShowSignupForm(true); setUsername(''); setEmail(''); setPassword(''); setConfirmPassword(''); }}>
+          <Text style={styles.signupLink}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>
+    )}
+  </View>
+</View>
+
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -239,11 +273,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
-    marginBottom: 5,
-  },
-  successMessage: {
-    color: 'green',
-    marginBottom: 5,
+    marginBottom: 10,
   },
 });
 
