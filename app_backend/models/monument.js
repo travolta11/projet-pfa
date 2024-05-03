@@ -71,8 +71,11 @@ static async addMonuments(titre, description, localisation, ville, id_admin, cre
 
 //update model......................................................................
 static async updateMonument(monumentId, newData) {
-    // Serialize the images array into a string
-    newData.images = JSON.stringify(newData.images);
+    // Check if images is an array
+    if (Array.isArray(newData.images)) {
+        // Convert the array of image URLs into a single string
+        newData.images = newData.images.join(',');
+    }
 
     return new Promise((resolve) => {
         db.query('UPDATE monument SET ? WHERE id = ?', [newData, monumentId], (error, results) => {
@@ -85,6 +88,7 @@ static async updateMonument(monumentId, newData) {
         });
     });
 }
+
 
 
 //update model......................................................................
