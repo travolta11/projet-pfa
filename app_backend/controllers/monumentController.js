@@ -26,13 +26,16 @@ static async addMonument(req, res) {
         titre,
         description,
         localisation,
+        longitude,
+        latitude,
         ville,
         id_admin,
         createur,
         horaire,
         frais,
         avis,
-        images  // Assuming images are now sent as URLs in the request body
+        images,
+        createur_id  // Assuming images are now sent as URLs in the request body
       } = req.body;
   
       // No need to map file paths since you're expecting image URLs
@@ -42,13 +45,16 @@ static async addMonument(req, res) {
         titre,
         description,
         localisation,
+        longitude,
+        latitude,
         ville,
         id_admin,
         createur,
         horaire,
         frais,
         avis,
-        images  // Pass image URLs directly to the addMonuments function
+        images,
+        createur_id   // Pass image URLs directly to the addMonuments function
       );
   
       if (addedM) {
@@ -92,10 +98,10 @@ static async addMonument(req, res) {
 //update controller............................................................
     static async updateMonument(req, res) {
         const monumentId = req.params.id;
-        const { titre, description, localisation, ville, id_admin, createur, horaire, frais, avis, images } = req.body;
+        const { titre, description, localisation,longitude,latitude, ville, id_admin, createur, horaire, frais, avis, images,createur_id  } = req.body;
 
         try {
-            const updated = await Monument.updateMonument(monumentId, { titre, description, localisation, ville, id_admin, createur, horaire, frais, avis, images });
+            const updated = await Monument.updateMonument(monumentId, { titre, description, localisation,longitude,latitude, ville, id_admin, createur, horaire, frais, avis, images,createur_id  });
             if (updated) {
                 res.status(200).json({ message: 'Monument updated successfully.' });
             } else {
