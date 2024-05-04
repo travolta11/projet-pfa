@@ -1,12 +1,12 @@
 const db = require('../config/db');
 
-class Monument {
+class Createur {
    
    
    //get model..............................................
-    static async getAllMonuments() {
+    static async getAllCreateurs() {
         return new Promise((resolve, reject) => {
-            db.query("SELECT * FROM monument", (error, results) => {
+            db.query("SELECT * FROM createur", (error, results) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20,7 +20,7 @@ class Monument {
 
 
 //add model.........................................................................
-static async addMonuments(titre, description, localisation,longitude,latitude, ville, id_admin, createur, horaire, frais, avis, images,createur_id ) {
+static async addCreateurs(nom, biographie, date_n,images ) {
     return new Promise(resolve => {
       let imagesString;
   
@@ -33,12 +33,12 @@ static async addMonuments(titre, description, localisation,longitude,latitude, v
         imagesString = images;
       }
   
-      db.query("INSERT INTO monument (titre, description, localisation,longitude,latitude, ville, id_admin, createur, horaire, frais, avis, images,createur_id ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)",
-        [titre, description, localisation,longitude,latitude, ville, id_admin, createur, horaire, frais, avis, imagesString,createur_id ], (error, results) => {
+      db.query("INSERT INTO createur (nom, biographie, date_n, images ) VALUES (?, ?, ?, ?)",
+        [nom, biographie, date_n, imagesString ], (error, results) => {
           if (!error) {
             resolve(true);
           } else {
-            console.error('Error adding monument:', error);
+            console.error('Error adding createur:', error);
             resolve(false);
           }
         });
@@ -51,13 +51,13 @@ static async addMonuments(titre, description, localisation,longitude,latitude, v
 
 
 //delete model......................................................................
-    static async deleteMonument(monumentId) {
+    static async deleteCreateur(createurId) {
         return new Promise((resolve) => {
-            db.query('DELETE FROM monument WHERE id = ?', [monumentId], (error, results) => {
+            db.query('DELETE FROM createur WHERE id = ?', [createurId], (error, results) => {
                 if (!error) {
                     resolve(true);
                 } else {
-                    console.error('Error deleting monument:', error);
+                    console.error('Error deleting createur:', error);
                     resolve(false);
                 }
             });
@@ -70,7 +70,7 @@ static async addMonuments(titre, description, localisation,longitude,latitude, v
 
 
 //update model......................................................................
-static async updateMonument(monumentId, newData) {
+static async updateCreateur(createurtId, newData) {
     // Check if images is an array
     if (Array.isArray(newData.images)) {
         // Convert the array of image URLs into a single string
@@ -78,11 +78,11 @@ static async updateMonument(monumentId, newData) {
     }
 
     return new Promise((resolve) => {
-        db.query('UPDATE monument SET ? WHERE id = ?', [newData, monumentId], (error, results) => {
+        db.query('UPDATE createur SET ? WHERE id = ?', [newData, createurtId], (error, results) => {
             if (!error) {
                 resolve(true);
             } else {
-                console.error('Error updating monument:', error);
+                console.error('Error updating createur:', error);
                 resolve(false);
             }
         });
@@ -96,9 +96,9 @@ static async updateMonument(monumentId, newData) {
 
 
 //get by id model...................................................................
-    static async getMonumentById(monumentId) {
+    static async getCreateurById(createurId) {
         return new Promise((resolve) => {
-            db.query('SELECT * FROM monument WHERE id = ?', [monumentId], (error, results) => {
+            db.query('SELECT * FROM createur WHERE id = ?', [createurId], (error, results) => {
                 if (!error && results.length > 0) {
                     resolve(results[0]);
                 } else {
@@ -113,4 +113,4 @@ static async updateMonument(monumentId, newData) {
 
 }
 
-module.exports = Monument;
+module.exports = Createur;
