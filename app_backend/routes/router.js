@@ -8,6 +8,8 @@ const monumentController = require('../controllers/monumentController');
 const adminController=require('../controllers/adminController');
 const touristController=require('../controllers/touristController');
 const avisController=require('../controllers/avisController')
+const createurController = require('../controllers/createurController');
+
 const path = require('path');
 
 
@@ -33,6 +35,19 @@ router.put('/monument/:id', monumentController.updateMonument);
 router.get('/monument/:id', monumentController.getMonumentById);
 //Monument CRUD API
 
+
+//Createur CRUD API
+//get api
+router.get('/createur', createurController.getAllCreateurs);
+//add api
+router.post('/createur', createurController.addCreateur);
+//delete api
+router.delete('/createur/:id', createurController.deleteCreateur); 
+//update api
+router.put('/createur/:id', createurController.updateCreateur);
+//get api by id
+router.get('/createur/:id', createurController.getCreateurById);
+//Createur CRUD API
 
 //Admin CRUD API
 //get api
