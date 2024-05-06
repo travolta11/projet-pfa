@@ -23,7 +23,7 @@ const MonumentStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Deconnection"
+        name="Monument"
         component={Monument}
         options={{
           headerRight: HeaderRightButton,
