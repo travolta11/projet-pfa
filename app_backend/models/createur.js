@@ -20,7 +20,7 @@ class Createur {
 
 
 //add model.........................................................................
-static async addCreateurs(nom, biographie, date_n,images ) {
+static async addCreateurs(nom, biographie, date_n,images,id_admin ) {
     return new Promise(resolve => {
       let imagesString;
   
@@ -33,8 +33,8 @@ static async addCreateurs(nom, biographie, date_n,images ) {
         imagesString = images;
       }
   
-      db.query("INSERT INTO createur (nom, biographie, date_n, images ) VALUES (?, ?, ?, ?)",
-        [nom, biographie, date_n, imagesString ], (error, results) => {
+      db.query("INSERT INTO createur (nom, biographie, date_n, images,id_admin ) VALUES (?, ?, ?, ?,?)",
+        [nom, biographie, date_n, imagesString,id_admin ], (error, results) => {
           if (!error) {
             resolve(true);
           } else {

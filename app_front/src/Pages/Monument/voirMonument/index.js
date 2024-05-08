@@ -30,7 +30,7 @@ const VoirMonument = () => {
   }, [id]);
 
   if (loading) {
-    return <Spin size="large"  />;
+    return <Spin size="large" />;
   }
 
   if (error) {
@@ -44,19 +44,20 @@ const VoirMonument = () => {
   const { titre, ville, createur, horaire, frais, avis, description, images } = monumentData;
 
   return (
-    <div>
-      <Title level={2}>{titre}</Title>
-      <p><strong>Ville:</strong> {ville}</p>
-      <p><strong>Créateur:</strong> {createur}</p>
-      <p><strong>Horaire:</strong> {horaire}</p>
-      <p><strong>Frais:</strong> {frais}</p>
-      <p><strong>Avis:</strong> {avis}</p>
-      <p><strong>Description:</strong> {description}</p>
-
-      <Carousel autoplay style={{  width: '600px' }}>
+    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <div style={{ marginBottom: '20px' }}>
+        <Title level={2}>{titre}</Title>
+        <p><strong>Ville:</strong> {ville}</p>
+        <p><strong>Créateur:</strong> {createur}</p>
+        <p><strong>Horaire:</strong> {horaire}</p>
+        <p><strong>Frais:</strong> {frais}</p>
+        <p><strong>Avis:</strong> {avis}</p>
+        <p style={{ width: '100%', wordWrap: 'break-word' }}><strong>Description:</strong> {description}</p>
+      </div>
+      <Carousel autoplay style={{ width: '100%', maxWidth: '600px' }}>
         {images.map((image, index) => (
           <div key={index}>
-            <img src={image} alt={`Image ${index}`} style={{ width: '600px', height: '500px' }}  />
+            <img src={image} alt={`Image ${index}`} style={{ width: '100%', height: 'auto' }} />
           </div>
         ))}
       </Carousel>

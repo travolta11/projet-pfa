@@ -27,17 +27,17 @@ static async addCreateur(req, res) {
         nom,
         biographie,
         date_n,
-        images // Assuming images are now sent as URLs in the request body
+        images,
+        id_admin 
       } = req.body;
   
-      // No need to map file paths since you're expecting image URLs
-      // const images = req.files.map(file => file.path);
-  
+    
       const addedC = await Createur.addCreateurs(
         nom,
         biographie,
         date_n,
-        images  // Pass image URLs directly to the addMonuments function
+        images,
+        id_admin  
       );
   
       if (addedC) {
@@ -81,10 +81,10 @@ static async addCreateur(req, res) {
 //update controller............................................................
     static async updateCreateur(req, res) {
         const createurId = req.params.id;
-        const { nom, biographie, date_n,images } = req.body;
+        const { nom, biographie, date_n,images,id_admin } = req.body;
 
         try {
-            const updated = await Createur.updateCreateur(createurId, { nom, biographie, date_n,images  });
+            const updated = await Createur.updateCreateur(createurId, { nom, biographie, date_n,images,id_admin  });
             if (updated) {
                 res.status(200).json({ message: 'Createur updated successfully.' });
             } else {
