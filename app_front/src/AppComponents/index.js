@@ -73,6 +73,11 @@ const AppComponents = () => {
               label: 'Gestion Monuments',
             },
             {
+              key: '/createur',
+              icon: <PushpinOutlined />,
+              label: 'Gestion Createur',
+            },
+            {
               key: '/utilisateur',
               icon: <SolutionOutlined />,
               label: 'Gestion Utilisateurs',

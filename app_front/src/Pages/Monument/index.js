@@ -98,11 +98,11 @@ const Monument = () => {
   };
 
   const handleAddMonument = () => {
-    navigate('/monument/ajouterM'); 
+    navigate('/monument/ajouterMonument'); 
   };
  
   const modifierMonument = (id) => {
-    navigate(`/monument/modifierM/${id}`);
+    navigate(`/monument/modifierMonument/${id}`);
   };
   
   
@@ -161,7 +161,7 @@ const Monument = () => {
 
   return (
     <>
-      <h1>Monument</h1>
+      <h1>Gestion Monument</h1>
 
       <div className="searchContainer">
         <Input
