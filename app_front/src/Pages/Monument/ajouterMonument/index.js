@@ -156,7 +156,30 @@ const AjouterMonument = () => {
           >
             <Input />
           </Form.Item>
-
+          <Form.Item
+            label="Longitude"
+            name="longitude"
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez saisir longitude',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Latitude"
+            name="latitude"
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez saisir latitude',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
           <Form.Item
             label="Créateur"
             name="createur"

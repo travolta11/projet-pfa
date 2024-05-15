@@ -57,7 +57,7 @@ const VoirMonument = () => {
       <Carousel autoplay style={{ width: '100%', maxWidth: '600px' }}>
         {images.map((image, index) => (
           <div key={index}>
-            <img src={image} alt={`Image ${index}`} style={{ width: '100%', height: 'auto' }} />
+            <img src={image} alt={`Image ${index}`} style={{ width: '50%', height: '75%' }} />
           </div>
         ))}
       </Carousel>
