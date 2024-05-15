@@ -1,13 +1,25 @@
 import React from "react";
 import { Typography, Form, Input, DatePicker, Button } from "antd";
+import useUserData from '../../../useUserData';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const { Title } = Typography;
 
 const AjouterCreateur = () => {
   const [form] = Form.useForm();
-
-  const onFinish = (values) => {
-    console.log("Received values of form:", values);
+const {id: admin_id}= useUserData();
+const navigate = useNavigate();
+  const onFinish = async (values) => {
+    
+    try {
+      const formData = { ...values, admin_id };
+      await axios.post('http://localhost:5000/createur', formData);
+      console.log('Form submitted:', values);
+      navigate('/createur');
+    } catch (error) {
+      console.log('Form submission failed:', error);
+    }
   };
 
   return (
@@ -21,7 +33,7 @@ const AjouterCreateur = () => {
         layout="vertical"
       >
         <Form.Item
-          name="name"
+          name="nom"
           label="Nom"
           rules={[
             { required: true, message: "Veuillez saisir le nom du créateur" },
@@ -31,7 +43,7 @@ const AjouterCreateur = () => {
         </Form.Item>
 
         <Form.Item
-          name="biography"
+          name="biographie"
           label="Biographie"
           rules={[
             {
@@ -44,7 +56,7 @@ const AjouterCreateur = () => {
         </Form.Item>
 
         <Form.Item
-          name="date_of_birth"
+          name="date_n"
           label="Date de naissance"
           rules={[
             {
@@ -55,7 +67,18 @@ const AjouterCreateur = () => {
         >
           <DatePicker />
         </Form.Item>
-
+        <Form.Item
+            label="URL des images"
+            name="photo"
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez saisir les URLs des images',
+              },
+            ]}
+          >
+            <Input.TextArea placeholder="Entrez les URLs des images séparées par des virgules" />
+          </Form.Item>
         <Button type="primary" htmlType="submit" className="submit-button">
           Ajouter le créateur
         </Button>

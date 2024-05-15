@@ -27,8 +27,8 @@ static async addCreateur(req, res) {
         nom,
         biographie,
         date_n,
-        images,
-        id_admin 
+        photo,
+        admin_id 
       } = req.body;
   
     
@@ -36,8 +36,8 @@ static async addCreateur(req, res) {
         nom,
         biographie,
         date_n,
-        images,
-        id_admin  
+        photo,
+        admin_id  
       );
   
       if (addedC) {
@@ -81,10 +81,10 @@ static async addCreateur(req, res) {
 //update controller............................................................
     static async updateCreateur(req, res) {
         const createurId = req.params.id;
-        const { nom, biographie, date_n,images,id_admin } = req.body;
+        const { nom, biographie, date_n,photo,admin_id } = req.body;
 
         try {
-            const updated = await Createur.updateCreateur(createurId, { nom, biographie, date_n,images,id_admin  });
+            const updated = await Createur.updateCreateur(createurId, { nom, biographie, date_n,photo,admin_id  });
             if (updated) {
                 res.status(200).json({ message: 'Createur updated successfully.' });
             } else {

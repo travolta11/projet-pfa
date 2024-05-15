@@ -20,21 +20,21 @@ class Createur {
 
 
 //add model.........................................................................
-static async addCreateurs(nom, biographie, date_n,images,id_admin ) {
+static async addCreateurs(nom, biographie, date_n,photo,admin_id ) {
     return new Promise(resolve => {
       let imagesString;
   
       // Check if images is an array
-      if (Array.isArray(images)) {
+      if (Array.isArray(photo)) {
         // Convert the array of image URLs into a single string
-        imagesString = images.join(',');
+        imagesString = photo.join(',');
       } else {
         // Handle the case where images is not an array (e.g., single image URL)
-        imagesString = images;
+        imagesString = photo;
       }
   
-      db.query("INSERT INTO createur (nom, biographie, date_n, images,id_admin ) VALUES (?, ?, ?, ?,?)",
-        [nom, biographie, date_n, imagesString,id_admin ], (error, results) => {
+      db.query("INSERT INTO createur (nom, biographie, date_n, photo,admin_id ) VALUES (?, ?, ?, ?,?)",
+        [nom, biographie, date_n, imagesString,admin_id ], (error, results) => {
           if (!error) {
             resolve(true);
           } else {
@@ -72,9 +72,9 @@ static async addCreateurs(nom, biographie, date_n,images,id_admin ) {
 //update model......................................................................
 static async updateCreateur(createurtId, newData) {
     // Check if images is an array
-    if (Array.isArray(newData.images)) {
+    if (Array.isArray(newData.photo)) {
         // Convert the array of image URLs into a single string
-        newData.images = newData.images.join(',');
+        newData.photo = newData.photo.join(',');
     }
 
     return new Promise((resolve) => {
