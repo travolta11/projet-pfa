@@ -15,16 +15,26 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyB12SUtRiYXP83XviTAd4e5UN15O_s-qEw"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyB12SUtRiYXP83XviTAd4e5UN15O_s-qEw"
+        }
+      },
+      "package": "com.hossam1956.app_mobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     }
+    
   }
 }

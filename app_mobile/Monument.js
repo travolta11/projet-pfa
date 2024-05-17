@@ -6,6 +6,9 @@ import MonumentDetails from './MonumentDetails';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import filter from 'lodash.filter';
+import { URL_API } from './ServerLink';
+import * as Location from 'expo-location';
+
 export default function Monument(){
     const Stack = createNativeStackNavigator();
         const navigation=useNavigation();
@@ -13,10 +16,25 @@ export default function Monument(){
         const [loading, setLoading] = useState(true);
         const [searchText, setSearchText] = useState('');
         const [fullData,setFullData]=useState([]);
+        useEffect(() => {
+            requestLocationPermission();
+          }, []);
+        
+          const requestLocationPermission = async () => {
+            try {
+              const { status } = await Location.requestForegroundPermissionsAsync();
+              if (status !== 'granted') {
+                alert('Permission to access location was denied');
+                return;
+              }
+            } catch (err) {
+              console.warn(err);
+            }
+          };
         useEffect(()=>{
             const MonumentFetch=async ()=>{
                 try{
-                    const response = await axios.get('http://192.168.100.15:5000/monument');
+                    const response = await axios.get(`${URL_API}/monument`);
                     setMonuments(response.data);
                     setFullData(response.data);
                     setLoading(false);

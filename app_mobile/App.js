@@ -11,10 +11,12 @@ import Map from "./Map";
 import Monument from "./Monument";
 import MonumentDetails from "./MonumentDetails";
 import ButtomNav from "./ButtomNav"
+import { useEffect } from 'react';
 const Stack = createNativeStackNavigator();
 
 
 export default function App() {
+
  
   return (
     

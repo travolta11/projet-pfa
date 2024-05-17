@@ -35,7 +35,7 @@ const ModifierCreateur = () => {
 
   const onFinish = async (values) => {
     try {
-      const formData = { ...values, admin_id };
+      const formData = { ...values, admin_id, };
       await axios.put(`http://localhost:5000/createur/${id}`, formData);
       console.log('Form submitted:', values);
       navigate('/createur');

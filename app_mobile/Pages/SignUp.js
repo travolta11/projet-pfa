@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { URL_API } from '../ServerLink';
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -16,7 +17,7 @@ export default function SignUp() {
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.post('http://192.168.100.15:5000/signup', {
+      const response = await axios.post(`${URL_API}/signup`, {
         username: signUpEmail,
         email: signUpEmail,
         password: signUpPassword,

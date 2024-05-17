@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form, Input, Button } from 'antd';
+import React,{useState,useEffect} from 'react';
+import { Form, Input, Button,Select } from 'antd';
 import './index.css';
 import useUserData from '../../../useUserData';
 import axios from 'axios';
@@ -25,9 +25,29 @@ const AjouterMonument = () => {
   const { id: id_admin } = useUserData();
   const navigate = useNavigate();
 
+  const [createurs, setCreateurs] = useState([]);
+
+  useEffect(() => {
+    const fetchCreateurs = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/createur');
+        setCreateurs(response.data);
+      } catch (error) {
+        console.log('Error fetching createurs:', error);
+      }
+    };
+    fetchCreateurs();
+  }, []);
+
   const onFinish = async (values) => {
     try {
-      const formData = { ...values, id_admin };
+      const selectedCreateur = createurs.find((createur) => createur.id === values.createur);
+      const formData = {
+        ...values,
+        id_admin,
+        createur_id: values.createur,
+        createur: selectedCreateur ? selectedCreateur.nom : '',
+      };
       await axios.post('http://localhost:5000/monument', formData);
       console.log('Form submitted:', values);
       navigate('/monument');
@@ -186,12 +206,19 @@ const AjouterMonument = () => {
             rules={[
               {
                 required: true,
-                message: 'Veuillez saisir le créateur',
+                message: 'Veuillez sélectionner un créateur',
               },
             ]}
           >
-            <Input />
-          </Form.Item>  
+            <Select>
+              <Select.Option value="">Sélectionnez un créateur</Select.Option>
+              {createurs.map((createur) => (
+                <Select.Option key={createur.id} value={createur.id}>
+                  {createur.nom}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
 
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit" className="submit-button">
