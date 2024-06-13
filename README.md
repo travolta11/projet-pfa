@@ -64,23 +64,23 @@ volumes:
 ## Frontend Project Structure
 The React JS front-end project is organized around five main parts, each serving a specific purpose and contributing to the overall architecture and maintainability of the application.
 
-###1. Login
+### 1. Login
 **Objective:** The LOGIN component is responsible for managing administrator authentication in the application. It aims to ensure secure access to the application using the JWT (JSON Web Tokens) protocol.
 **Functionality:** Administrators enter their credentials in a login form. The server authenticates these credentials and returns a securely stored JWT, which is then sent with each request to verify the administrator's identity and permissions.
 
-###2. Dashboard
+### 2. Dashboard
 **Objective:** The Dashboard component is responsible for visualizing key application statistics, such as information on monuments, creators, and users. It aims to provide administrators with an overview of the application's activity and performance.
 **Functionality:** Displays the total number of monuments, users, and creators. Presents this information in a synthetic and visual manner. Real-time updates of key figures.
 
-###3. Creator
+### 3. Creator
 **Objective:** Allows administrators to manage information about creators registered in the application.
 Functionality: Add, modify, and delete creators. Display a list of creators with filters. Link creators to the monuments they have created.
 
-###4. Monument
+### 4. Monument
 **Objective:** Allows administrators to manage information about monuments registered in the application.
 Functionality: Add, modify, and delete monuments. Display a list of monuments with filters. View details of a specific monument and link monuments to their creators.
 
-###5. Tourist
+### 5. Tourist
 **Objective:** Allows administrators to manage the accounts of tourists registered in the application.
 Functionality: Deactivate tourist accounts. Display a list of users with filters. View details of a specific user and assign roles and permissions to users.
 
