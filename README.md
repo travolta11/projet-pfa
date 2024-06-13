@@ -1,23 +1,21 @@
-# Application de guide touristique local basée sur la géolocalisation
+# Local Tour Guide Application Based on Geolocation
 ![logo](img/logo.png)
-## Table des matières
+## Table of Contents
 
-- [Objectif générale du projet](#Objectif-générale-du-projet)
-- [Architecture du projet](#Architecture-du-projet)
+
+- [General Objective of the Project](#Objectif-générale-du-projet)
+- [Project Architecture](#Architecture-du-projet)
 - [Docker Compose](#Docker-compose)
 - [Frontend](#Frontend) 
 - [Backend](#Backend)
 - [Images Demostration](#Images-Demostration)  
-- [Contributeurs](#Contributeurs)
+- [Contributors](#Contributeurs)
 
-## Objectif générale du projet
-Ce projet de guide touristique mobile représente une initiative ambitieuse et innovante
-visant à faciliter la découverte du riche patrimoine historique d’une ville. Axée sur l’accessibilité, l’exhaustivité des informations et l’interactivité, cette application mobile se
-positionne comme un outil incontournable pour les habitants et les visiteurs souhaitant
-explorer en profondeur les monuments et sites historiques locaux.
-## Architecture du projet
+## General Objective of the Project
+This mobile tourist guide project represents an ambitious and innovative initiative aiming to facilitate the discovery of a city's rich historical heritage. Focused on accessibility, comprehensive information, and interactivity, this mobile application positions itself as an essential tool for residents and visitors wishing to thoroughly explore local monuments and historical sites.
+## Project Architecture
 ![logo](img/architecture.jpg)
-Cette application touristique a été conçue avec une architecture moderne et évolutive. Le backend a été développé avec le framework Express.js, offrant une API robuste et sécurisée pour gérer les différentes fonctionnalités de l'application. La partie front-end admin a été construite avec React.js, une bibliothèque JavaScript puissante permettant de créer une interface utilisateur dynamique et interactive pour les administrateurs. Cela leur permet de gérer le contenu, les réservations et les informations des utilisateurs de manière efficace. Parallèlement, la partie mobile client a été développée en utilisant React Native, un framework permettant de créer des applications natives pour iOS et Android à partir d'un seul code base en JavaScript/TypeScript. Cela assure une expérience utilisateur fluide et cohérente sur les différents appareils mobiles, tout en partageant une grande partie du code entre les plateformes. Cette architecture modulaire offre de nombreux avantages, notamment en termes de maintenabilité, de scalabilité et de performance globale de l'application touristique.
+This tourist application is designed with a modern and scalable architecture. The backend is developed using the Express.js framework, providing a robust and secure API to manage the application's various functionalities. The admin front-end is built with React.js, a powerful JavaScript library for creating a dynamic and interactive user interface for administrators. This allows them to efficiently manage content, bookings, and user information. Concurrently, the client mobile part is developed using React Native, a framework for creating native applications for iOS and Android from a single codebase in JavaScript/TypeScript. This ensures a smooth and consistent user experience across different mobile devices while sharing much of the code between platforms. This modular architecture offers many benefits, including maintainability, scalability, and overall application performance.
 ## docker Compose
 ```yaml
 version: "2.24.6"
@@ -54,64 +52,60 @@ services:
   depends_on:
     - app_backend
 
-
 volumes:
  mysql-db: {}
+
 ```
 ## Frontend
 
-### Technologies Utilisées
+### Technologies Used
 - React JS
 - Ant Design
-## Structure du projet Frontend
-Le projet front-end React JS est organisé autour de cinq parties principaux, chacun répondant à un objectif spécifique et contribuant à l'architecture globale et à la maintenabilité de l'application.
+## Frontend Project Structure
+The React JS front-end project is organized around five main parts, each serving a specific purpose and contributing to the overall architecture and maintainability of the application.
 
-### 1. Login
-- ***Objectif*** : Le composant LOGIN est responsable de la gestion de l'authentification des administrateurs dans l'application. Il vise à garantir la sécurité de l'accès à l'application en utilisant le protocole JWT (JSON Web Tokens).
-- ***Fonctionnalité*** : Les administrateurs saisissent leurs identifiants dans un formulaire de connexion. Le serveur authentifie ces identifiants et renvoie un jeton JWT stocké de manière sécurisée, qui est ensuite transmis avec chaque requête pour vérifier l'identité et les autorisations de l'administrateur.
+###1. Login
+**Objective:** The LOGIN component is responsible for managing administrator authentication in the application. It aims to ensure secure access to the application using the JWT (JSON Web Tokens) protocol.
+**Functionality:** Administrators enter their credentials in a login form. The server authenticates these credentials and returns a securely stored JWT, which is then sent with each request to verify the administrator's identity and permissions.
 
-### 2. Tableau de bord
-- ***Objectif*** : Le composant Dashboard est responsable de la visualisation des statistiques clés de l'application, telles que les informations sur les monuments, les créateurs et les utilisateurs. Il a pour but de fournir aux administrateurs une vue d'ensemble de l'activité et de la performance de l'application.
-  
-- ***Fonctionnalité*** :Affichage du nombre total de monuments, d'utilisateurs et de créateurs Présentation de ces informations de manière synthétique et visuelle Mise à jour en temps réel des chiffres clés
+###2. Dashboard
+**Objective:** The Dashboard component is responsible for visualizing key application statistics, such as information on monuments, creators, and users. It aims to provide administrators with an overview of the application's activity and performance.
+**Functionality:** Displays the total number of monuments, users, and creators. Presents this information in a synthetic and visual manner. Real-time updates of key figures.
 
-### 3. Createur
-- ***Objectif*** : Permettre aux administrateurs de gérer les informations des créateurs  enregistrés dans l'application.
+###3. Creator
+**Objective:** Allows administrators to manage information about creators registered in the application.
+Functionality: Add, modify, and delete creators. Display a list of creators with filters. Link creators to the monuments they have created.
 
-- ***Fonctionnalité*** : Ajouter, modifier et supprimer des créateurs, afficher la liste des créateurs avec filtres et lier les créateurs aux monuments qu'ils ont créés.
+###4. Monument
+**Objective:** Allows administrators to manage information about monuments registered in the application.
+Functionality: Add, modify, and delete monuments. Display a list of monuments with filters. View details of a specific monument and link monuments to their creators.
 
-### 4. Monument
-- ***Objectif*** : Permettre aux administrateurs de gérer les informations des monuments enregistrés dans l'application..
-
-- ***Fonctionnalité*** : Ajouter, modifier et supprimer des monuments, afficher la liste des monuments avec filtres, visualiser les détails d'un monument spécifique et lier les monuments à leurs créateurs.
-
-### 5. Tourist
-- ***Objectif*** : Permettre aux administrateurs de gérer  les comptes des tourists enregistrés dans l'application.
-
-- ***Fonctionnalité*** : Désactiver les comptes des tourists, afficher la liste des utilisateurs avec filtres, visualiser les détails d'un utilisateur spécifique et attribuer des rôles et autorisations aux utilisateurs.
+###5. Tourist
+**Objective:** Allows administrators to manage the accounts of tourists registered in the application.
+Functionality: Deactivate tourist accounts. Display a list of users with filters. View details of a specific user and assign roles and permissions to users.
 
 ## Backend
-### Technologies Utilisées
+### Technologies Used
 - Express JS
 - MySql
   
-## Structure du projet Backend
-Le backend développé avec Express.js est connecté à une base de données MySQL et est composé des modules suivants : les modèles (Admin, Avis, Createur, Monument, Tourist) définissant la structure des données, des contrôleurs  gérant la logique métier, et des routes configurant les différents points d'accès de l'API.
+## Backend Project Structure
+The backend developed with Express.js is connected to a MySQL database and consists of the following modules: models (Admin, Review, Creator, Monument, Tourist) defining the data structure, controllers handling business logic, and routes configuring the various API access points.
 
 ### 1. routes
-Les fichiers de routes définissent les différents points d'accès de l'API, configurant les URL, les méthodes HTTP et les paramètres attendus pour chaque endpoint. Ils sont responsables du routage des requêtes vers les contrôleurs appropriés.
+Route files define the various API access points, configuring URLs, HTTP methods, and expected parameters for each endpoint. They are responsible for routing requests to the appropriate controllers.
 ### 2. controllers
-Les fichiers de contrôleurs sont chargés de gérer les requêtes HTTP entrantes. Chaque contrôleur est dédié à une fonctionnalité ou une entité spécifique, exposant des endpoints RESTful. Ces fichiers interagissent directement avec les modèles pour traiter les requêtes et renvoyer les réponses appropriées.
+Controller files handle incoming HTTP requests. Each controller is dedicated to a specific functionality or entity, exposing RESTful endpoints. These files interact directly with models to process requests and return appropriate responses.
 ### 3. .models
-Les fichiers de modèles représentent les données de l'application. Ils définissent la structure des données qui seront stockées dans la base de données MySQL. Chaque modèle correspond généralement à une table dans la base de données.
+Model files represent the application's data. They define the data structure to be stored in the MySQL database. Each model generally corresponds to a table in the database.
 
-## Lancez l'application en local:
-1. **Cloner le Project:**
+## Launch the Application Locally:
+1. **Clone the Project:**
    ```bash
    git clone <repository_url>
    cd <project_folder>
    ```
-2. **Demarrez Docker Desktop et lancez le docker-compose**
+2. **Start Docker Desktop and launch docker-compose**
    ```bash
    docker compose up
    ```
@@ -119,14 +113,14 @@ Les fichiers de modèles représentent les données de l'application. Ils défin
     ```bash
    docker-compose up
    ```
-3. **Veuillez Changer l'URL_API dans app_mobile/ServerLink.js et mettez votre address ip**
-4. **Demarrez l'application mobile**
+3. **Change the URL_API in app_mobile/ServerLink.js and set your IP address**
+4. **Start the mobile application**
    ```bash
    cd app_mobile
    npx expo start
    ```
-### Images Demostration
-## Partie adminstrateur
+### Images Demonstration
+## Admin Part
 ![login](img/images_admin/login(1).png)
 ![dashboard](img/images_admin/Dashboard.png)
 ![gestion_Monument](img/images_admin/gestionMonument.png)
@@ -135,7 +129,7 @@ Les fichiers de modèles représentent les données de l'application. Ils défin
 ![voir_createur](img/images_admin/VoirCreateur.png)
 ![gestion_user](img/images_admin/desactiverUtilisateur.png)
 
-## Partie mobile
+## Mobile Part
 <img src="img/images_mobile/LoginUser.png" width="250" height="500" />
 <img src="img/images_mobile/Signup.png" width="250" height="500" />
 <img src="img/images_mobile/monument.jpg" width="250" height="500" />
@@ -149,7 +143,7 @@ Les fichiers de modèles représentent les données de l'application. Ils défin
 
 
 
-## Contributeurs
+## Contributors
 - LIQALI Issam ([GitHub](https://github.com/travolta11))
 - CHALABI Hossam ([GitHub](https://github.com/hossam1956))
 - JAAFARI CharafEddine ([GitHub](https://github.com/CharafEddineJaafari))
